@@ -53,5 +53,46 @@ class Solution:
                     output[i] *= nums[m]
 
         return output 
+    
+    def isValidSudoku(self, board: list[list[str]]) -> bool:
+        row = [set() for i in range(9)]
+        column = [set() for i in range(9)]
+        box = [set() for i in range(9)]
+        
+        for r in range(9):
+            for c in range(9):
 
+                cell = board[r][c]
+                if cell == ".":
+                    continue
+
+                if cell in row[r]:
+                    return False
+                row[r].add(cell)
+
+                if cell in column[c]:
+                    return False
+                column[c].add(cell)
+
+                box_index = (r // 3) * 3 + (c // 3)
+                if cell in box[box_index]:
+                    return False
+                box[box_index].add(cell) 
+
+        return True 
+
+        
 ans = Solution()
+print(ans.isValidSudoku(
+[[".",".","4",   ".",".",".",   "6","3","."],
+ [".",".",".",   ".",".",".",   ".",".","."],
+ ["5",".",".",   ".",".",".",   ".","9","."],
+
+ [".",".",".",   "5","6",".",   ".",".","."],
+ ["4",".","3",   ".",".",".",   ".",".","1"],
+ [".",".",".",   "7",".",".",   ".",".","."],
+
+ [".",".",".",   "5",".",".",   ".",".","."],
+ [".",".",".",   ".",".",".",   ".",".","."],
+ [".",".",".",   ".",".",".",   ".",".","."]]
+))
