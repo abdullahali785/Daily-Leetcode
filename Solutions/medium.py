@@ -80,19 +80,21 @@ class Solution:
                 box[box_index].add(cell) 
 
         return True 
+    
+    def longestConsecutive(self, nums: list[int]) -> int:
+        numSet = set(nums)
+        longest = 0
 
+        for num in numSet:
+            if num - 1 not in numSet:
+                lenght = 1 
+                while num + lenght in numSet:
+                    lenght += 1
+                longest = max(lenght, longest)
+        return longest
         
 ans = Solution()
-print(ans.isValidSudoku(
-[[".",".","4",   ".",".",".",   "6","3","."],
- [".",".",".",   ".",".",".",   ".",".","."],
- ["5",".",".",   ".",".",".",   ".","9","."],
-
- [".",".",".",   "5","6",".",   ".",".","."],
- ["4",".","3",   ".",".",".",   ".",".","1"],
- [".",".",".",   "7",".",".",   ".",".","."],
-
- [".",".",".",   "5",".",".",   ".",".","."],
- [".",".",".",   ".",".",".",   ".",".","."],
- [".",".",".",   ".",".",".",   ".",".","."]]
-))
+print(ans.longestConsecutive([1,2,3,10,11,12]))
+print(ans.longestConsecutive([2,20,4,10,3,4,5]))
+print(ans.longestConsecutive([0,3,2,5,4,6,1,1]))
+print(ans.longestConsecutive([0]))
