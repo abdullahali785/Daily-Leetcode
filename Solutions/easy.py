@@ -19,7 +19,18 @@ class Solution:
             i = j+1+lenght
         return result  
     
+    def sPalindrome(self, s: str) -> bool:
+        cleaned = ''.join(c for c in s if c.isalnum()).lower()
+        reversed = ""
+
+        for i in range(len(cleaned)-1, -1, -1):
+            reversed += cleaned[i]
+
+        if reversed == cleaned:
+            return True
+        
+        return False
     
 
 ans = Solution()
-print(ans.productExceptSelf([-1,0,1,2,3]))
+print(ans.sPalindrome("Was it a car or a cat I saw?"))
