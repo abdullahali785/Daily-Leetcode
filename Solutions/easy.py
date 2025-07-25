@@ -31,6 +31,18 @@ class Solution:
         
         return False
     
+    def twoSum(self, numbers: list[int], target: int) -> list[int]:
+        p1 = 1
+        p2 = len(numbers)
+
+        while p1 < p2:
+            if numbers[p1-1] + numbers[p2-1] > target:
+                p2 -= 1
+            elif numbers[p1-1] + numbers[p2-1] < target:
+                p1 += 1
+            else:
+                return [p1, p2]
+            
 
 ans = Solution()
-print(ans.sPalindrome("Was it a car or a cat I saw?"))
+print(ans.twoSum([2,3,4], 6))
