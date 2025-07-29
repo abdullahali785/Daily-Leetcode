@@ -92,9 +92,31 @@ class Solution:
                     lenght += 1
                 longest = max(lenght, longest)
         return longest
+    
+    def threeSum(self, nums: list[int]) -> list[list[int]]:
+        nums.sort()
+        ans = []
+
+        for i, a in enumerate(nums):
+            if i > 0 and a == nums[i-1]:
+                continue
+
+            j, k = i+1, len(nums)-1 
+            target = -a
+
+            while j < k:
+                if nums[j] + nums[k] < target:
+                    j += 1
+                elif nums[j] + nums[k] > target:
+                    k -= 1
+                else:
+                    ans.append([a, nums[j], nums[k]])
+                    j += 1
+                    while nums[j] == nums[j-1] and j < k:
+                        j += 1
+        
+        return ans 
+
         
 ans = Solution()
-print(ans.longestConsecutive([1,2,3,10,11,12]))
-print(ans.longestConsecutive([2,20,4,10,3,4,5]))
-print(ans.longestConsecutive([0,3,2,5,4,6,1,1]))
-print(ans.longestConsecutive([0]))
+print(ans.threeSum([0,0,0,0])) 
