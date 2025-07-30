@@ -116,7 +116,20 @@ class Solution:
                         j += 1
         
         return ans 
+    
+    def maxArea(self, heights: list[int]) -> int:
+        l, r = 0, len(heights)-1
+        capacity = []
+
+        while l < r:
+            capacity.append((r - l) * min(heights[l], heights[r]))
+            if heights[l] < heights[r]:
+                l += 1
+            else:
+                r -= 1
+            
+        return max(capacity)
 
         
 ans = Solution()
-print(ans.threeSum([0,0,0,0])) 
+print(ans.maxArea([1,7,2,5,4,7,3,6])) 
