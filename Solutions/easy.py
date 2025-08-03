@@ -44,27 +44,20 @@ class Solution:
                 return [p1, p2]
             
     def isValid(self, s: str) -> bool:
-        opening = ['(', '[', '{']
-        closing = [')', ']', '}']
+        parentheses = {')':'(', ']':'[', '}':'{'}
+        stack = []
 
-        stack = [None] * len(s)
-        top = -1
-
-        for i, a in enumerate(s):
-            if a in opening:
-                top += 1
-                stack[top] = a
-            elif a in closing:
-                if stack[top] == opening[closing.index(a)]:
-                    stack[top] = None 
-                    top -= 1
+        for a in s:
+            if a in parentheses:
+                if stack and stack[-1] == parentheses[a]:
+                    stack.pop()
                 else:
-                    return False 
+                    return False
+            else:
+                stack.append(a)
 
-        if stack[top] == None:
-            return True 
-        
-        return False 
+        return True if not stack else False 
+
 
 
 ans = Solution()
