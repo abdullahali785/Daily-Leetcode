@@ -130,6 +130,29 @@ class Solution:
             
         return max(capacity)
 
+class MinStack:
+
+    def __init__(self):
+        self.stack = []
+
+    def push(self, val: int) -> None:
+        self.stack.append(val)
+         
+    def pop(self) -> None:
+        self.stack.pop()
+
+    def top(self) -> int:
+        return self.stack[-1]
+
+    def getMin(self) -> int:
+        return min(self.stack)  
+
         
-ans = Solution()
-print(ans.maxArea([1,7,2,5,4,7,3,6])) 
+ans = MinStack()
+print(ans.push(1))
+print(ans.push(2))
+print(ans.push(0))
+print(ans.getMin())
+print(ans.pop())
+print(ans.top())
+print(ans.getMin())
