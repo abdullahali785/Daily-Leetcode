@@ -129,6 +129,29 @@ class Solution:
                 r -= 1
             
         return max(capacity)
+    
+    def evalRPN(self, tokens: list[str]) -> int:
+        stack = []
+        operators = ['+', '-', '*', '/']
+
+        for a in tokens:
+            try:
+                int(a)
+                stack.append(int(a))
+            except:
+                i1 = int(stack.pop())
+                i2 = int(stack.pop())
+                if a == '+':
+                    stack.append(i2 + i1)
+                elif a == '-':
+                    stack.append(i2 - i1)
+                elif a == '*':
+                    stack.append(i2 * i1)
+                else:
+                    stack.append(i2 / i1)
+
+        return int(stack[0])
+
 
 class MinStack:
 
@@ -148,11 +171,6 @@ class MinStack:
         return min(self.stack)  
 
         
-ans = MinStack()
-print(ans.push(1))
-print(ans.push(2))
-print(ans.push(0))
-print(ans.getMin())
-print(ans.pop())
-print(ans.top())
-print(ans.getMin())
+ans = Solution()
+#print(ans.evalRPN(["1","2","+","3","*","4","-"]))
+print(ans.evalRPN(["0","3","/"]))
