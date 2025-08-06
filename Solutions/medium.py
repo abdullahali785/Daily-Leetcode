@@ -151,6 +151,21 @@ class Solution:
                     stack.append(i2 / i1)
 
         return int(stack[0])
+    
+    def generateParenthesis(self, n: int) -> list[str]:
+        res = []
+
+        def backtrack(currrent, opening, closing):
+            if len(currrent) == 2*n:
+                res.append(currrent)
+                return 
+            if opening < n:
+                backtrack(currrent+'(', opening+1, closing)
+            if closing < opening: 
+                backtrack(currrent+')', opening, closing+1)
+
+        backtrack('', 0, 0)
+        return res 
 
 
 class MinStack:
@@ -173,4 +188,4 @@ class MinStack:
         
 ans = Solution()
 #print(ans.evalRPN(["1","2","+","3","*","4","-"]))
-print(ans.evalRPN(["0","3","/"]))
+print(ans.generateParenthesis(3))
