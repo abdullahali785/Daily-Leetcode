@@ -1,5 +1,22 @@
 from collections import defaultdict
 
+class MinStack:
+
+    def __init__(self):
+        self.stack = []
+
+    def push(self, val: int) -> None:
+        self.stack.append(val)
+         
+    def pop(self) -> None:
+        self.stack.pop()
+
+    def top(self) -> int:
+        return self.stack[-1]
+
+    def getMin(self) -> int:
+        return min(self.stack)
+
 class Solution:
 
     def groupAnagrams_sorting(self, strs: list[str]) -> list[list[str]]:
@@ -166,26 +183,18 @@ class Solution:
 
         backtrack('', 0, 0)
         return res 
+    
+    def dailyTemperatures(self, temperatures: list[int]) -> list[int]:
+        stack = []
+        res = [0] * len(temperatures)
 
+        for i, t in enumerate(temperatures):
+            while stack and t > stack[-1][0]:
+                stackT, stackInd = stack.pop()
+                res[stackInd] = (i - stackInd)
+            stack.append([t, i])
 
-class MinStack:
+        return res 
 
-    def __init__(self):
-        self.stack = []
-
-    def push(self, val: int) -> None:
-        self.stack.append(val)
-         
-    def pop(self) -> None:
-        self.stack.pop()
-
-    def top(self) -> int:
-        return self.stack[-1]
-
-    def getMin(self) -> int:
-        return min(self.stack)  
-
-        
 ans = Solution()
-#print(ans.evalRPN(["1","2","+","3","*","4","-"]))
-print(ans.generateParenthesis(3))
+print(ans.dailyTemperatures([30,38,30,36,35,40,28]))
