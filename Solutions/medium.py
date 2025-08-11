@@ -205,6 +205,21 @@ class Solution:
             if len(stack) >= 2 and stack[-1] <= stack[-2]:
                 stack.pop()
         return len(stack)
+    
+    def maxProfit(self, prices: list[int]) -> int:
+        l, r = 0, 1 #Left -> Buy, Right -> Sell
+        maxP = 0
+
+        while r < len(prices):
+            if prices[r] > prices[l]:
+                profit = prices[r] - prices[l]
+                maxP = max(maxP, profit)
+            else:
+                l = r
+            r += 1
+
+        return maxP if maxP > 0 else 0
+
 
 ans = Solution()
-print(ans.dailyTemperatures([30,38,30,36,35,40,28]))
+print(ans.maxProfit([10,1,5,6,7,1]))
