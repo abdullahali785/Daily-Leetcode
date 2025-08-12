@@ -220,6 +220,19 @@ class Solution:
 
         return maxP if maxP > 0 else 0
 
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        seen = set()
+        l = 0
+        res = 0
+
+        for r in range(len(s)):
+            while s[r] in seen:
+                seen.remove(s[l])
+                l += 1
+            seen.add(s[r])
+            res = max(res, r-l + 1)
+
+        return res 
 
 ans = Solution()
-print(ans.maxProfit([10,1,5,6,7,1]))
+print(ans.lengthOfLongestSubstring("xyzxyzxyza"))
