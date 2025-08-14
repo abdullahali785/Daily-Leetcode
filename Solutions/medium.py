@@ -249,6 +249,21 @@ class Solution:
             res = max(res, (r - l + 1))
 
         return res 
+    
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        if len(s1) > len(s2):
+            return False 
+
+        l, r = 0, len(s1)
+        
+        while r < len(s2)+1:
+            if sorted(s2[l : r]) == sorted(s1):
+                return True 
+            else:
+                l += 1
+                r += 1
+
+        return False 
               
 ans = Solution()
-print(ans.characterReplacement("XYYX", 2))
+print(ans.checkInclusion("adc", "dcda"))
