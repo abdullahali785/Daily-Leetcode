@@ -41,6 +41,38 @@ class Solution:
             maxArea = max(maxArea, h * (len(heights) - i))
 
         return maxArea 
+    
+    def minWindow(self, s: str, t: str) -> str:
+        if t == "": return ""
+
+        countT, countS = {}, {}
+        for a in t:
+            countT[a] = 1 + countT.get(a, 0)
+
+        have, need = 0, len(countT)
+        res, resLen = [-1, -1], float("infinity")
+        l = 0
+
+        for r in range(len(s)):
+            c = s[r]
+            countS[c] = 1 + countS.get(c, 0)
+
+            if c in countT and countS[c] == countT[c]:
+                have += 1
+
+            while have == need:
+                if (r - l + 1) < resLen:
+                    res = [l, r]
+                    resLen = (r - l + 1)
+
+                countS[s[l]] -= 1
+                if s[l] in countT and countS[s[l]] < countT[s[l]]:
+                    have -= 1
+
+                l += 1
+
+        l, r = res 
+        return s[l: r+1] if resLen != float("infinity") else ""
 
 
 ans = Solution()
