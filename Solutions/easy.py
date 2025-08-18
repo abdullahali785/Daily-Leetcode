@@ -1,4 +1,19 @@
+import collections
+from typing import Optional
 from collections import defaultdict
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+    def __str__(self):
+        vals = []
+        curr = self
+        while curr:
+            vals.append(str(curr.val))
+            curr = curr.next
+        return "[" + " -> ".join(vals) + "]"
 
 class Solution:
 
@@ -57,8 +72,19 @@ class Solution:
                 stack.append(a)
 
         return True if not stack else False 
+    
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        prev = None
+        crr = head 
 
+        while crr:
+            nxt = crr.next
+            crr.next = prev
 
+            prev = crr
+            crr = nxt
+
+        return prev
 
 ans = Solution()
-print(ans.isValid("{([])}"))
+print(ans.reverseList(ListNode(0, ListNode(1, ListNode(2, ListNode(3, ListNode(4)))))))
