@@ -107,6 +107,17 @@ class Solution:
             tail.next = list2
 
         return dummy.next 
+    
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        s, f = head, head
+
+        while f and f.next:
+            s = s.next
+            f = f.next.next
+            if s == f:
+                return True
+
+        return False   
 
 ans = Solution()
 print(ans.reverseList(ListNode(0, ListNode(1, ListNode(2, ListNode(3, ListNode(4)))))))
