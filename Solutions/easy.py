@@ -20,20 +20,20 @@ class Solution:
     def encode(self, strs: list) -> str:
         result = ''
         for i in strs:
-            result += str(len(i)) + '#' + i 
+            result += str(len(i)) + '#' + i
         return result
-            
+
     def decode(self, s: str) -> list[str]:
         result, i = [], 0 #i will be at the integer which shows lenght of first string.
         while i < len(s):
-            j = i #j will be on the delimiter. 
+            j = i #j will be on the delimiter.
             while s[j] != '#':
                 j += 1
             lenght = int(s[i:j])
             result.append(s[j+1:j+1+lenght])
             i = j+1+lenght
-        return result  
-    
+        return result
+
     def sPalindrome(self, s: str) -> bool:
         cleaned = ''.join(c for c in s if c.isalnum()).lower()
         reversed = ""
@@ -43,9 +43,9 @@ class Solution:
 
         if reversed == cleaned:
             return True
-        
+
         return False
-    
+
     def twoSum(self, numbers: list[int], target: int) -> list[int]:
         p1 = 1
         p2 = len(numbers)
@@ -57,7 +57,7 @@ class Solution:
                 p1 += 1
             else:
                 return [p1, p2]
-            
+
     def isValid(self, s: str) -> bool:
         parentheses = {')':'(', ']':'[', '}':'{'}
         stack = []
@@ -71,11 +71,11 @@ class Solution:
             else:
                 stack.append(a)
 
-        return True if not stack else False 
-    
+        return True if not stack else False
+
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
         prev = None
-        crr = head 
+        crr = head
 
         while crr:
             nxt = crr.next
@@ -88,7 +88,7 @@ class Solution:
 
     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
         dummy = ListNode(-1)
-        tail = dummy 
+        tail = dummy
 
         while list1 and list2:
             if list1.val < list2.val:
@@ -97,7 +97,7 @@ class Solution:
 
             else:
                 tail.next = list2
-                list2 = list2.next 
+                list2 = list2.next
 
             tail = tail.next
 
@@ -106,8 +106,8 @@ class Solution:
         elif list2:
             tail.next = list2
 
-        return dummy.next 
-    
+        return dummy.next
+
     def hasCycle(self, head: Optional[ListNode]) -> bool:
         s, f = head, head
 
@@ -117,7 +117,32 @@ class Solution:
             if s == f:
                 return True
 
-        return False   
+        return False
+
+    def reorderList(self, head: Optional[ListNode]) -> None:
+        s, f = head, head.next
+
+        while f and f.next:
+            s = s.next
+            f = f.next.next
+
+        secondHalf = s.next 
+        prev = s.next = None
+
+        while secondHalf:
+            nxt = secondHalf.next
+            secondHalf.next = prev
+            prev = secondHalf
+            secondHalf = nxt
+
+        firstHalf, secondHalf = head, prev 
+
+        while secondHalf:
+            temp1, temp2 = firstHalf.next, secondHalf.next
+            firstHalf.next = secondHalf
+            secondHalf.next = temp1
+            firstHalf, secondHalf = temp1, temp2
+
 
 ans = Solution()
-print(ans.reverseList(ListNode(0, ListNode(1, ListNode(2, ListNode(3, ListNode(4)))))))
+print(ans.reorderList(ListNode(0, ListNode(1, ListNode(2, ListNode(3, ListNode(4)))))))
