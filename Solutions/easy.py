@@ -119,30 +119,5 @@ class Solution:
 
         return False
 
-    def reorderList(self, head: Optional[ListNode]) -> None:
-        s, f = head, head.next
-
-        while f and f.next:
-            s = s.next
-            f = f.next.next
-
-        secondHalf = s.next 
-        prev = s.next = None
-
-        while secondHalf:
-            nxt = secondHalf.next
-            secondHalf.next = prev
-            prev = secondHalf
-            secondHalf = nxt
-
-        firstHalf, secondHalf = head, prev 
-
-        while secondHalf:
-            temp1, temp2 = firstHalf.next, secondHalf.next
-            firstHalf.next = secondHalf
-            secondHalf.next = temp1
-            firstHalf, secondHalf = temp1, temp2
-
-
 ans = Solution()
 print(ans.reorderList(ListNode(0, ListNode(1, ListNode(2, ListNode(3, ListNode(4)))))))

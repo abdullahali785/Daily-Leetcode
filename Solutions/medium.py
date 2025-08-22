@@ -1,5 +1,20 @@
+import collections
+from typing import Optional
 from collections import defaultdict
 
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+    def __str__(self):
+        vals = []
+        curr = self
+        while curr:
+            vals.append(str(curr.val))
+            curr = curr.next
+        return "[" + " -> ".join(vals) + "]"
+    
 class MinStack:
 
     def __init__(self):
@@ -264,6 +279,44 @@ class Solution:
                 r += 1
 
         return False 
+    
+    def reorderList(self, head: Optional[ListNode]) -> None:
+        s, f = head, head.next
+
+        while f and f.next:
+            s = s.next
+            f = f.next.next
+
+        secondHalf = s.next 
+        prev = s.next = None
+
+        while secondHalf:
+            nxt = secondHalf.next
+            secondHalf.next = prev
+            prev = secondHalf
+            secondHalf = nxt
+
+        firstHalf, secondHalf = head, prev 
+
+        while secondHalf:
+            temp1, temp2 = firstHalf.next, secondHalf.next
+            firstHalf.next = secondHalf
+            secondHalf.next = temp1
+            firstHalf, secondHalf = temp1, temp2
+
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        dummy = ListNode(0, head)
+        first = second = dummy 
+
+        for i in range(n+1):
+            first = first.next
+
+        while first:
+            first = first.next
+            second = second.next
+
+        second.next = second.next.next
+        return dummy.next
               
 ans = Solution()
 print(ans.checkInclusion("adc", "dcda"))
