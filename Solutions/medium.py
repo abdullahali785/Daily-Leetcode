@@ -15,6 +15,12 @@ class ListNode:
             curr = curr.next
         return "[" + " -> ".join(vals) + "]"
     
+class Node:
+    def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
+        self.val = int(x)
+        self.next = next
+        self.random = random
+    
 class MinStack:
 
     def __init__(self):
@@ -317,6 +323,24 @@ class Solution:
 
         second.next = second.next.next
         return dummy.next
+    
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        copyTable = {None : None}
+
+        crr = head
+        while crr:
+            copy = Node(crr.val)
+            copyTable[crr] = copy
+            crr = crr.next
+
+        crr = head
+        while crr:
+            copy = copyTable[crr]
+            copy.next = copyTable[crr.next]
+            copy.random = copyTable[crr.random]
+            crr = crr.next 
+
+        return copyTable[head]
               
 ans = Solution()
 print(ans.checkInclusion("adc", "dcda"))
