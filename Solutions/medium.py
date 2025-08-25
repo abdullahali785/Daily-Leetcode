@@ -361,7 +361,15 @@ class Solution:
             l2 = l2.next if l2 else None
 
         return res.next
+    
+    def findDuplicate(self, nums: list[int]) -> int:
+        for num in nums:
+            index = abs(num) -1
+            if nums[index] < 0:
+                return abs(num)
+            nums[index] *= -1
 
+        return -1 
 
 ans = Solution()
-print(ans.addTwoNumbers([1,2,3], [4,5,6]))
+print(ans.findDuplicate([1,2,2,3,4]))
