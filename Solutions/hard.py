@@ -1,6 +1,20 @@
 import collections
+from typing import Optional
 from collections import defaultdict
 from collections import deque
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+    def __str__(self):
+        vals = []
+        curr = self
+        while curr:
+            vals.append(str(curr.val))
+            curr = curr.next
+        return "[" + " -> ".join(vals) + "]"
 
 class Solution:
     def trap(self, height: list[int]) -> int:
@@ -96,6 +110,36 @@ class Solution:
             r += 1
 
         return res 
+
+    def mergeTwoLists(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode(-1)
+        tail = dummy 
+
+        while l1 and l2:
+            if l1.val < l2.val:
+                tail.next = l1
+                l1 = l1.next
+            else:
+                tail.next = l2
+                l2 = l2.next
+
+            tail = tail.next
+
+        if l1:
+            tail.next = l1
+        elif l2:
+            tail.next = l2
+
+        return dummy.next
+    
+    def mergeKLists(self, lists: list[Optional[ListNode]]) -> Optional[ListNode]:
+        if len(lists) == 0:
+            return None
+            
+        for i in range(1, len(lists)):
+            lists[i] = self.mergeTwoLists(lists[i], lists[i-1])
+
+        return lists[-1]
             
 
 ans = Solution()
