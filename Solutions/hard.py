@@ -140,7 +140,35 @@ class Solution:
             lists[i] = self.mergeTwoLists(lists[i], lists[i-1])
 
         return lists[-1]
-            
+    
+    def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        dummy = ListNode(0, head)
+        groupPrev = dummy
 
+        while True:
+            kth = self.getKth(groupPrev, k)
+            if not kth:
+                break
+            groupNext = kth.next
+
+            prev, crr = kth.next, groupPrev.next
+            while crr != groupNext:
+                nxt = crr.next
+                crr.next = prev
+                prev = crr
+                crr = nxt
+
+            nxt = groupPrev.next
+            groupPrev.next = kth
+            groupPrev = nxt
+
+        return dummy.next
+
+    def getKth(self, crr, k):
+        while crr and k > 0:
+            crr = crr.next
+            k -= 1
+        return crr
+            
 ans = Solution()
 print(ans.maxSlidingWindow([1,2,1,0,4,2,6], 3))
