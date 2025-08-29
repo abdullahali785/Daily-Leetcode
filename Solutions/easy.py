@@ -118,6 +118,21 @@ class Solution:
                 return True
 
         return False
+    
+    def search(self, nums: list[int], target: int) -> int:
+        def helper(nums: list[int], target: int, low: int, high: int) -> int:
+            if low > high:
+                return -1
+
+            mid = (low + high) // 2
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] > target:
+                return helper(nums, target, low, mid-1)
+            else:
+                return helper(nums, target, mid+1, high)
+                
+        return helper(nums, target, 0, len(nums)-1)
 
 ans = Solution()
 print(ans.reorderList(ListNode(0, ListNode(1, ListNode(2, ListNode(3, ListNode(4)))))))
