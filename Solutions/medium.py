@@ -1,4 +1,5 @@
 import collections
+import math
 from typing import Optional
 from collections import defaultdict
 
@@ -439,6 +440,25 @@ class Solution:
                 return True 
         
         return False 
+    
+    def minEatingSpeed(self, piles: list[int], h: int) -> int:
+        l, r = 1, max(piles)
+        res = r
+
+        while l <= r:
+            mid = (l + r) // 2
+            hours = 0
+            for p in piles:
+                hours += math.ceil(p / mid)
+
+            if hours <= h:
+                res = min(res, mid)
+                r = mid-1
+
+            else:
+                l = mid+1
+
+        return res 
 
 ans = Solution()
 print(ans.findDuplicate([1,2,2,3,4]))
