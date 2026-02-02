@@ -57,6 +57,18 @@ class Solution:
                 p1 += 1
             else:
                 return [p1, p2]
+            
+    def twoSum(self, nums: list[int], target: int) -> list[int]:
+        hashmap = {}
+        length = len(nums)
+
+        for i in range(length):
+            hashmap[nums[i]] = i
+
+        for i in range(length):
+            diff = target - nums[i]
+            if diff in hashmap and hashmap[diff] != i:
+                return [i, hashmap[diff]]
 
     def isValid(self, s: str) -> bool:
         parentheses = {')':'(', ']':'[', '}':'{'}
