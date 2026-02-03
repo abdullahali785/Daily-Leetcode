@@ -16,7 +16,6 @@ class ListNode:
         return "[" + " -> ".join(vals) + "]"
 
 class Solution:
-
     def encode(self, strs: list) -> str:
         result = ''
         for i in strs:
@@ -69,6 +68,24 @@ class Solution:
             diff = target - nums[i]
             if diff in hashmap and hashmap[diff] != i:
                 return [i, hashmap[diff]]
+            
+    def isAnagram(self, s: str, t: str) -> bool:
+        hashmap = {}
+        for letter in s:
+            if letter not in hashmap:  
+                hashmap[letter] = 0
+            hashmap[letter] += 1
+
+        for letter in t:
+            if letter in hashmap:
+                hashmap[letter] -= 1
+            else:
+                return False
+
+        if all(value == 0 for value in hashmap.values()): 
+            return True 
+        else:
+            return False
 
     def isValid(self, s: str) -> bool:
         parentheses = {')':'(', ']':'[', '}':'{'}
