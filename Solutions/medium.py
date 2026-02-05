@@ -80,7 +80,6 @@ class LRUCache:
             del self.cache[lru.key]
 
 class Solution:
-
     def groupAnagrams_sorting(self, strs: list[str]) -> list[list[str]]:
         res = defaultdict(list)
         
@@ -100,6 +99,20 @@ class Solution:
             res[tuple(count)].append(s)
 
         return list(res.values())
+    
+    def groupAnagrams_frequency(self, strs: list[str]) -> list[list[str]]:
+        hashmap = {}
+
+        for string in strs:
+            frequency = [0] * 26
+            for letter in string:
+                frequency[ord(letter) - ord("a")] += 1
+            
+            if tuple(frequency) not in hashmap:
+                hashmap[tuple(frequency)] = []
+            hashmap[tuple(frequency)].append(string)
+
+        return list(hashmap.values())
     
 
     def topKFrequent(self, nums: list[int], k: int) -> list[int]:
