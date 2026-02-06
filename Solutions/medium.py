@@ -1,7 +1,7 @@
-import collections
 import math
+import collections
 from typing import Optional
-from collections import defaultdict
+from collections import Counter, defaultdict
 
 class ListNode:
     def __init__(self, val=0, next=None):
@@ -132,6 +132,20 @@ class Solution:
                 res.append(num)
                 if len(res) == k:
                     return res 
+                
+    def topKFrequent_bucket(self, nums: list[int], k: int) -> list[int]:
+        freq = Counter(nums)
+        ans = []
+        buckets = [[] for i in range(len(nums) + 1)]
+
+        for num, count in freq.items():
+            buckets[count].append(num)
+
+        for i in range(len(buckets) - 1, 0, -1):
+            for n in buckets[i]:
+                ans.append(n)
+                if len(ans) == k:
+                    return ans
 
     def productExceptSelf(self, nums: list[int]) -> list[int]:
         n = len(nums)
