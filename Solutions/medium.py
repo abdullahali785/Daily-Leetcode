@@ -181,6 +181,30 @@ class Solution:
 
         return output 
     
+    def productExceptSelf_prefix(self, nums: list[int]) -> list[int]:
+        prefix, sufix, res = [], [], []
+        productP, productS = 1, 1
+        length = len(nums)
+
+        for i in range(length):
+            productP *= nums[i]
+            prefix.append(productP)
+
+        for i in range(length-1, -1, -1):
+            productS *= nums[i]
+            sufix.insert(0, productS)
+
+        for i in range(length):
+            if i == 0:
+                res.append(sufix[i+1])
+            elif i == length - 1:
+                res.append(prefix[i-1])
+            else:
+                product = prefix[i-1] * sufix[i+1]
+                res.append(product)
+
+        return res 
+    
     def isValidSudoku(self, board: list[list[str]]) -> bool:
         row = [set() for i in range(9)]
         column = [set() for i in range(9)]
