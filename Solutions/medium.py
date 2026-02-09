@@ -166,22 +166,9 @@ class Solution:
             res.append(s[j + 1 : j + 1 + length])
             i = j + 1 + length
 
-        return res 
-
-    def productExceptSelf(self, nums: list[int]) -> list[int]:
-        n = len(nums)
-        output = [1] * n
-
-        for i in range(n):
-            for m in range(n):
-                if m == i:
-                    continue
-                else:
-                    output[i] *= nums[m]
-
-        return output 
+        return res  
     
-    def productExceptSelf_prefix(self, nums: list[int]) -> list[int]:
+    def productExceptSelf(self, nums: list[int]) -> list[int]:
         prefix, sufix, res = [], [], []
         productP, productS = 1, 1
         length = len(nums)
