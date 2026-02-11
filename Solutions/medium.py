@@ -236,15 +236,17 @@ class Solution:
         return True
     
     def longestConsecutive(self, nums: list[int]) -> int:
-        numSet = set(nums)
+        nums = set(nums)
         longest = 0
 
-        for num in numSet:
-            if num - 1 not in numSet:
-                lenght = 1 
-                while num + lenght in numSet:
-                    lenght += 1
-                longest = max(lenght, longest)
+        for num in nums:
+            if num - 1 not in nums:
+                count = 0
+                while num + count in nums:
+                    count += 1
+
+                longest = max(count, longest)
+                
         return longest
     
     def threeSum(self, nums: list[int]) -> list[list[int]]:
