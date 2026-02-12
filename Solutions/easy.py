@@ -101,6 +101,17 @@ class Solution:
                 stack.append(a)
 
         return True if not stack else False
+    
+    def isPalindrome(self, s: str) -> bool:
+        text = [char.lower() for char in s if char.isalnum()]
+        l, r = 0, len(text) - 1
+
+        while l < r:
+            if text[l] != text[r]: return False
+            l += 1
+            r -= 1    
+
+        return True
 
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
         prev = None
