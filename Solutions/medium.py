@@ -249,6 +249,17 @@ class Solution:
                 
         return longest
     
+    def twoSum(self, numbers: list[int], target: int) -> list[int]:
+        l, r = 0, 1
+
+        while l < r:
+            while r < len(numbers):
+                if numbers[l] + numbers[r] == target:
+                    return [l+1, r+1]
+                r += 1
+            l += 1
+            r = l + 1
+    
     def threeSum(self, nums: list[int]) -> list[list[int]]:
         nums.sort()
         ans = []
