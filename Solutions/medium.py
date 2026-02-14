@@ -249,17 +249,6 @@ class Solution:
                 
         return longest
     
-    def twoSum(self, numbers: list[int], target: int) -> list[int]:
-        l, r = 0, 1
-
-        while l < r:
-            while r < len(numbers):
-                if numbers[l] + numbers[r] == target:
-                    return [l+1, r+1]
-                r += 1
-            l += 1
-            r = l + 1
-    
     def threeSum(self, nums: list[int]) -> list[list[int]]:
         nums.sort()
         ans = []
@@ -283,6 +272,25 @@ class Solution:
                         j += 1
         
         return ans 
+    
+    def threeSum_set(self, nums: list[int]) -> list[list[int]]:
+        nums = sorted(nums)
+        length = len(nums)
+        res = set()
+
+        for i in range(length):
+            j, k = i + 1, i + 2
+
+            while j < length - 1:
+                while k < length:
+                    print(i, j, k)
+                    if -nums[i] == nums[j] + nums[k]:
+                        res.add((nums[i], nums[j], nums[k]))
+                    k += 1
+                j += 1
+                k = j + 1
+
+        return list(res)
     
     def maxArea(self, heights: list[int]) -> int:
         l, r = 0, len(heights)-1
