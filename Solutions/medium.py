@@ -293,17 +293,20 @@ class Solution:
         return list(res)
     
     def maxArea(self, heights: list[int]) -> int:
-        l, r = 0, len(heights)-1
-        capacity = []
+        max_water = 0
+        i, j = 0, 1
 
-        while l < r:
-            capacity.append((r - l) * min(heights[l], heights[r]))
-            if heights[l] < heights[r]:
-                l += 1
-            else:
-                r -= 1
-            
-        return max(capacity)
+        while i < len(heights) - 1:
+            while j < len(heights):
+                water = min(heights[i], heights[j]) * (j - i)
+                if water > max_water:
+                    max_water = water 
+                j += 1
+
+            i += 1
+            j = i + 1
+
+        return max_water
     
     def evalRPN(self, tokens: list[str]) -> int:
         stack = []
