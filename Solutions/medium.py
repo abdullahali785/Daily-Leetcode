@@ -283,7 +283,6 @@ class Solution:
 
             while j < length - 1:
                 while k < length:
-                    print(i, j, k)
                     if -nums[i] == nums[j] + nums[k]:
                         res.add((nums[i], nums[j], nums[k]))
                     k += 1
