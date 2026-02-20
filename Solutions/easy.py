@@ -88,19 +88,19 @@ class Solution:
             return False
 
     def isValid(self, s: str) -> bool:
-        parentheses = {')':'(', ']':'[', '}':'{'}
+        hashmap = {')':'(', '}':'{', ']':'['}
         stack = []
 
-        for a in s:
-            if a in parentheses:
-                if stack and stack[-1] == parentheses[a]:
+        for elem in s:
+            if elem in hashmap:
+                if stack and stack[-1] == hashmap[elem]:
                     stack.pop()
                 else:
-                    return False
+                    return False 
             else:
-                stack.append(a)
-
-        return True if not stack else False
+                stack.append(elem)
+        
+        return True if not stack else False 
     
     def isPalindrome(self, s: str) -> bool:
         text = [char.lower() for char in s if char.isalnum()]
