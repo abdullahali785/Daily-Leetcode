@@ -337,6 +337,32 @@ class Solution:
 
         return int(stack[0])
     
+    def evalRPN(self, tokens: list[str]) -> int:
+        stack = []
+        operators = ['+', '-', '*', '/']
+
+        for token in tokens:
+            if token in operators:
+                num2 = stack.pop()
+                num1 = stack.pop()
+
+                if token == "+":
+                    stack.append(num1 + num2)
+
+                elif token == "-":
+                    stack.append(num1 - num2)
+
+                elif token == "*":
+                    stack.append(num1 * num2)
+
+                elif token == "/":
+                    stack.append(int(num1 / num2))
+
+            else:
+                stack.append(int(token))
+        
+        return int(stack[-1])
+    
     def generateParenthesis(self, n: int) -> list[str]:
         res = []
 
