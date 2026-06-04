@@ -16,6 +16,14 @@ class ListNode:
         return "[" + " -> ".join(vals) + "]"
 
 class Solution:
+    def hasDuplicate(self, nums: list[int]) -> bool:
+        hashmap = {}
+        for num in nums:
+            if num in hashmap:
+                return True
+            hashmap[num] = 1
+        return False
+    
     def encode(self, strs: list) -> str:
         result = ''
         for i in strs:
