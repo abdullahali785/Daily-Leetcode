@@ -23,6 +23,23 @@ class Solution:
                 return True
             hashmap[num] = 1
         return False
+
+    def isAnagram(self, s: str, t: str) -> bool:
+        hashmap = {}
+
+        for char in s:
+            if char in hashmap:
+                hashmap[char] += 1
+            else:
+                hashmap[char] = 1
+
+        for char in t:
+            if char in hashmap:
+                hashmap[char] -= 1
+            else:
+                return False
+
+        return all(v == 0 for v in hashmap.values())
     
     def encode(self, strs: list) -> str:
         result = ''
@@ -76,24 +93,6 @@ class Solution:
             diff = target - nums[i]
             if diff in hashmap and hashmap[diff] != i:
                 return [i, hashmap[diff]]
-            
-    def isAnagram(self, s: str, t: str) -> bool:
-        hashmap = {}
-        for letter in s:
-            if letter not in hashmap:  
-                hashmap[letter] = 0
-            hashmap[letter] += 1
-
-        for letter in t:
-            if letter in hashmap:
-                hashmap[letter] -= 1
-            else:
-                return False
-
-        if all(value == 0 for value in hashmap.values()): 
-            return True 
-        else:
-            return False
 
     def isValid(self, s: str) -> bool:
         hashmap = {')':'(', '}':'{', ']':'['}
