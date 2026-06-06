@@ -41,6 +41,42 @@ class Solution:
 
         return all(v == 0 for v in hashmap.values())
     
+    def twoSum(self, numbers: list[int], target: int) -> list[int]:
+        p1 = 1
+        p2 = len(numbers)
+
+        while p1 < p2:
+            if numbers[p1-1] + numbers[p2-1] > target:
+                p2 -= 1
+            elif numbers[p1-1] + numbers[p2-1] < target:
+                p1 += 1
+            else:
+                return [p1, p2]
+            
+    def twoSum(self, nums: list[int], target: int) -> list[int]:
+        hashmap = {}
+        length = len(nums)
+
+        for i in range(length):
+            hashmap[nums[i]] = i
+
+        for i in range(length):
+            diff = target - nums[i]
+            if diff in hashmap and hashmap[diff] != i:
+                return [i, hashmap[diff]]
+
+    def twoSum(self, nums: list[int], target: int) -> list[int]:
+        hashmap = {}
+
+        for i in range(len(nums)):
+            hashmap[nums[i]] = i
+
+        for j in range(len(nums)):
+            tar = target - nums[j]
+            if tar in hashmap and hashmap[tar] != j:
+                return [min(hashmap[tar], j), max(hashmap[tar], j)] 
+
+    
     def encode(self, strs: list) -> str:
         result = ''
         for i in strs:
@@ -69,30 +105,6 @@ class Solution:
             return True
 
         return False
-
-    def twoSum(self, numbers: list[int], target: int) -> list[int]:
-        p1 = 1
-        p2 = len(numbers)
-
-        while p1 < p2:
-            if numbers[p1-1] + numbers[p2-1] > target:
-                p2 -= 1
-            elif numbers[p1-1] + numbers[p2-1] < target:
-                p1 += 1
-            else:
-                return [p1, p2]
-            
-    def twoSum(self, nums: list[int], target: int) -> list[int]:
-        hashmap = {}
-        length = len(nums)
-
-        for i in range(length):
-            hashmap[nums[i]] = i
-
-        for i in range(length):
-            diff = target - nums[i]
-            if diff in hashmap and hashmap[diff] != i:
-                return [i, hashmap[diff]]
 
     def isValid(self, s: str) -> bool:
         hashmap = {')':'(', '}':'{', ']':'['}
