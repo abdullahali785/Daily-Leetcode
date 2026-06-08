@@ -97,16 +97,17 @@ class Solution:
 
         return list(res.values()) 
     
-    def groupAnagrams_hashtable(self, strs: list[str]) -> list[list[str]]:
-        res = defaultdict(list)
-        
-        for s in strs:
-            count = [0] * 26
-            for c in s:
-                count[ord(c) - ord('a')] += 1
-            res[tuple(count)].append(s)
+    def groupAnagrams_hashmap(self, strs: list[str]) -> list[list[str]]:
+        hashmap = defaultdict(list)
 
-        return list(res.values())
+        for string in strs:
+            freq = [0] * 26
+            for char in string:
+                freq[ord(char) - ord('a')] += 1
+
+            hashmap[tuple(freq)].append(string)
+
+        return list(hashmap.values())
     
     def groupAnagrams_frequency(self, strs: list[str]) -> list[list[str]]:
         hashmap = {}

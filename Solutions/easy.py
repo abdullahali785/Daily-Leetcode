@@ -75,7 +75,6 @@ class Solution:
             tar = target - nums[j]
             if tar in hashmap and hashmap[tar] != j:
                 return [min(hashmap[tar], j), max(hashmap[tar], j)] 
-
     
     def encode(self, strs: list) -> str:
         result = ''
