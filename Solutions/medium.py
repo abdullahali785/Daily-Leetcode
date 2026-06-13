@@ -308,6 +308,19 @@ class Solution:
                 longest = max(count, longest)
                 
         return longest
+
+    def longestConsecutive_set(self, nums: list[int]) -> int:
+        numSet = set(nums)
+        longest = 0
+
+        for num in nums:
+            if num - 1 not in numSet:
+                lenght = 0
+                while (num + lenght) in numSet:
+                    lenght += 1
+                longest = max(longest, lenght)
+
+        return longest
     
     def threeSum(self, nums: list[int]) -> list[list[int]]:
         nums.sort()
