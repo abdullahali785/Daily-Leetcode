@@ -104,21 +104,21 @@ class Solution:
             return True
 
         return False
-
+    
     def isValid(self, s: str) -> bool:
-        hashmap = {')':'(', '}':'{', ']':'['}
         stack = []
+        hashmap = {'}':'{', ']':'[', ')':'('}
 
-        for elem in s:
-            if elem in hashmap:
-                if stack and stack[-1] == hashmap[elem]:
+        for char in s:
+            if char in hashmap: # Char is a closing bracket
+                if stack and hashmap[char] == stack[-1]:
                     stack.pop()
                 else:
                     return False 
-            else:
-                stack.append(elem)
+            else: # Char is a opening bracket 
+                stack.append(char)
         
-        return True if not stack else False 
+        return True if stack == [] else False
     
     def isPalindrome(self, s: str) -> bool:
         text = [char.lower() for char in s if char.isalnum()]
