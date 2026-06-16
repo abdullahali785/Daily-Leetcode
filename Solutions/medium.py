@@ -316,6 +316,32 @@ class Solution:
                 longest = max(longest, lenght)
 
         return longest
+
+    def evalRPN(self, tokens: list[str]) -> int:
+        stack = []
+        operators = ['+', '-', '*', '/']
+
+        for token in tokens:
+            if token not in operators:
+                stack.append(token)
+                continue
+
+            int1 = int(stack.pop())
+            int2 = int(stack.pop())
+
+            if token == "+":
+                stack.append(int1 + int2)
+
+            elif token == "-":
+                stack.append(int2 - int1)
+
+            elif token == "*":
+                stack.append(int1 * int2)
+
+            else:
+                stack.append(int2 / int1)
+
+        return int(stack[-1])
     
     def threeSum(self, nums: list[int]) -> list[list[int]]:
         nums.sort()
@@ -374,54 +400,6 @@ class Solution:
             j = i + 1
 
         return max_water
-    
-    def evalRPN(self, tokens: list[str]) -> int:
-        stack = []
-        operators = ['+', '-', '*', '/']
-
-        for a in tokens:
-            try:
-                int(a)
-                stack.append(int(a))
-            except:
-                i1 = int(stack.pop())
-                i2 = int(stack.pop())
-                if a == '+':
-                    stack.append(i2 + i1)
-                elif a == '-':
-                    stack.append(i2 - i1)
-                elif a == '*':
-                    stack.append(i2 * i1)
-                else:
-                    stack.append(i2 / i1)
-
-        return int(stack[0])
-    
-    def evalRPN(self, tokens: list[str]) -> int:
-        stack = []
-        operators = ['+', '-', '*', '/']
-
-        for token in tokens:
-            if token in operators:
-                num2 = stack.pop()
-                num1 = stack.pop()
-
-                if token == "+":
-                    stack.append(num1 + num2)
-
-                elif token == "-":
-                    stack.append(num1 - num2)
-
-                elif token == "*":
-                    stack.append(num1 * num2)
-
-                elif token == "/":
-                    stack.append(int(num1 / num2))
-
-            else:
-                stack.append(int(token))
-        
-        return int(stack[-1])
     
     def generateParenthesis(self, n: int) -> list[str]:
         res = []
