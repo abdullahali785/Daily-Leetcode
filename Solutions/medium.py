@@ -418,15 +418,14 @@ class Solution:
     
     def dailyTemperatures(self, temperatures: list[int]) -> list[int]:
         res = [0] * len(temperatures)
-        stack = [] # pair: [temp, index]
-        
-        for i, t in enumerate(temperatures) : 
-            while stack and t > stack[-1][0]:
-                stackT, stackInd = stack.pop()
-                res[stackInd] = (i - stackInd)
+        stack = []
 
+        for i, t in enumerate(temperatures):
+            while stack and t > stack[-1][0]:
+                stackT, stackI = stack.pop()
+                res[stackI] = (i - stackI) 
             stack.append([t, i])
-            
+
         return res
     
     def carFleet(self, target: int, position: list[int], speed: list[int]) -> int:
