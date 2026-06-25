@@ -401,6 +401,17 @@ class Solution:
 
         return max_water
     
+    def twoSum(self, numbers: list[int], target: int) -> list[int]:
+        l, r = 0, len(numbers) - 1
+
+        while r > l:
+            if numbers[l] + numbers[r] > target:
+                r -= 1
+            elif numbers[l] + numbers[r] < target:
+                l += 1
+            else:
+                return [l+1, r+1]
+    
     def generateParenthesis(self, n: int) -> list[str]:
         res = []
 
