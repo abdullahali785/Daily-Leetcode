@@ -345,27 +345,26 @@ class Solution:
     
     def threeSum(self, nums: list[int]) -> list[list[int]]:
         nums.sort()
-        ans = []
+        res = []
 
-        for i, a in enumerate(nums):
-            if i > 0 and a == nums[i-1]:
+        for i, num in enumerate(nums):
+            if i > 0 and num == nums[i-1]:
                 continue
 
-            j, k = i+1, len(nums)-1 
-            target = -a
-
-            while j < k:
-                if nums[j] + nums[k] < target:
-                    j += 1
-                elif nums[j] + nums[k] > target:
-                    k -= 1
+            l, r = i + 1, len(nums) - 1
+            while l < r:
+                total = num + nums[l] + nums[r]
+                if total < 0:
+                    l += 1
+                elif total > 0:
+                    r -= 1
                 else:
-                    ans.append([a, nums[j], nums[k]])
-                    j += 1
-                    while nums[j] == nums[j-1] and j < k:
-                        j += 1
-        
-        return ans 
+                    res.append([num, nums[l], nums[r]])
+                    l += 1
+                    while l < r and nums[l] == nums[l-1]:
+                        l += 1
+                        
+        return res
     
     def threeSum_set(self, nums: list[int]) -> list[list[int]]:
         nums = sorted(nums)
@@ -400,17 +399,6 @@ class Solution:
             j = i + 1
 
         return max_water
-    
-    def twoSum(self, numbers: list[int], target: int) -> list[int]:
-        l, r = 0, len(numbers) - 1
-
-        while r > l:
-            if numbers[l] + numbers[r] > target:
-                r -= 1
-            elif numbers[l] + numbers[r] < target:
-                l += 1
-            else:
-                return [l+1, r+1]
     
     def generateParenthesis(self, n: int) -> list[str]:
         res = []
