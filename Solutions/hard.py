@@ -18,28 +18,23 @@ class ListNode:
 
 class Solution:
     def trap(self, height: list[int]) -> int:
-        n = len(height)
-        if n == 0:
-            return 0
-        
-        prefix = [None] * n
-        suffix = [None] * n
+        pre, suf, res = 0, 0, 0
+        prefix, suffix = [], []
 
-        prefix[0] = height[0]
-        for i in range(1, n):
-            prefix[i] = max(prefix[i-1], height[i])
-        
-        suffix[n-1] = height[n-1]
-        for i in range(n-2, -1, -1):
-            suffix[i] = max(suffix[i+1], height[i])
+        for p in height: 
+            pre = max(pre, p)
+            prefix.append(pre)
 
-        water = 0
-        for i in range(n):
-            water_i = (min(prefix[i], suffix[i]) - height[i]) 
-            if water_i > 0:
-                water += water_i 
+        for s in height[::-1]:
+            suf = max(suf, s)
+            suffix.append(suf)
+        suffix = suffix[::-1]
 
-        return water 
+        for i in range(len(height)):
+            water = min(prefix[i], suffix[i]) - height[i]
+            res += water
+
+        return res 
     
     def trap_2pointer(self, height: list[int]) -> int:
         if not height:
