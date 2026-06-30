@@ -154,14 +154,13 @@ class Solution:
 
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
         prev = None
-        crr = head
+        curr = head
 
-        while crr:
-            nxt = crr.next
-            crr.next = prev
-
-            prev = crr
-            crr = nxt
+        while curr:
+            nex = curr.next
+            curr.next = prev
+            prev = curr
+            curr = nex
 
         return prev
 
