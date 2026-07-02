@@ -185,15 +185,16 @@ class Solution:
         return res.next 
 
     def hasCycle(self, head: Optional[ListNode]) -> bool:
-        s, f = head, head
+        slow, fast = head, head
 
-        while f and f.next:
-            s = s.next
-            f = f.next.next
-            if s == f:
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+
+            if slow == fast:
                 return True
 
-        return False
+        return False 
     
     def search(self, nums: list[int], target: int) -> int:
         def helper(nums: list[int], target: int, low: int, high: int) -> int:
