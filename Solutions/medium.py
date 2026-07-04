@@ -528,28 +528,26 @@ class Solution:
     
     def reorderList(self, head: Optional[ListNode]) -> None:
         s, f = head, head.next
-
         while f and f.next:
             s = s.next
             f = f.next.next
 
-        secondHalf = s.next 
+        l2 = s.next
         prev = s.next = None
 
-        while secondHalf:
-            nxt = secondHalf.next
-            secondHalf.next = prev
-            prev = secondHalf
-            secondHalf = nxt
+        while l2:
+            temp = l2.next
+            l2.next = prev
+            prev = l2
+            l2 = temp 
 
-        firstHalf, secondHalf = head, prev 
-
-        while secondHalf:
-            temp1, temp2 = firstHalf.next, secondHalf.next
-            firstHalf.next = secondHalf
-            secondHalf.next = temp1
-            firstHalf, secondHalf = temp1, temp2
-
+        l1, l2 = head, prev
+        while l2:
+            temp1, temp2 = l1.next, l2.next
+            l1.next = l2
+            l2.next = temp1
+            l1, l2 = temp1, temp2
+            
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
         dummy = ListNode(0, head)
         first = second = dummy 
