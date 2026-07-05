@@ -550,17 +550,19 @@ class Solution:
             
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
         dummy = ListNode(0, head)
-        first = second = dummy 
+        right = head
+        left = dummy 
 
-        for i in range(n+1):
-            first = first.next
+        while n > 0 and right:
+            right = right.next
+            n -= 1
 
-        while first:
-            first = first.next
-            second = second.next
+        while right:
+            left = left.next
+            right = right.next
 
-        second.next = second.next.next
-        return dummy.next
+        left.next = left.next.next 
+        return dummy.next 
     
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
         copyTable = {None : None}
@@ -676,4 +678,4 @@ class Solution:
         return res
 
 ans = Solution()
-print(ans.findDuplicate([1,2,2,3,4]))
+print(ans.removeNthFromEnd([1,2,3,4], 2))
