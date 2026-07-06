@@ -565,22 +565,22 @@ class Solution:
         return dummy.next 
     
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
-        copyTable = {None : None}
+        oldToCopy = {None : None}
 
-        crr = head
-        while crr:
-            copy = Node(crr.val)
-            copyTable[crr] = copy
-            crr = crr.next
+        cur = head 
+        while cur:
+            copy = Node(cur.val)
+            oldToCopy[cur] = copy
+            cur = cur.next
+        
+        cur = head 
+        while cur:
+           copy = oldToCopy[cur]
+           copy.next = oldToCopy[cur.next]
+           copy.random = oldToCopy[cur.random]
+           cur = cur.next
 
-        crr = head
-        while crr:
-            copy = copyTable[crr]
-            copy.next = copyTable[crr.next]
-            copy.random = copyTable[crr.random]
-            crr = crr.next 
-
-        return copyTable[head]
+        return oldToCopy[head]
     
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
         res = ListNode()
