@@ -601,6 +601,31 @@ class Solution:
             l2 = l2.next if l2 else None
 
         return res.next
+
+    def addTwoNumbers_manual(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        one, two = l1, l2
+        num1, num2 = [], []
+        
+        while one:
+            num1.append(one.val)
+            one = one.next
+
+        while two:
+            num2.append(two.val)
+            two = two.next
+
+        num1 = "".join(str(x) for x in num1[::-1])
+        num2 = "".join(str(x) for x in num2[::-1])
+
+        sumNum = [int(digit) for digit in str(int(num1) + int(num2))][::-1]
+        res = ListNode(0)
+        cur = res
+
+        for num in sumNum:
+            cur.next = ListNode(num)
+            cur = cur.next
+
+        return res.next
     
     def findDuplicate(self, nums: list[int]) -> int:
         for num in nums:
