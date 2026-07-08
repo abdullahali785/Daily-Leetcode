@@ -635,6 +635,23 @@ class Solution:
             nums[index] *= -1
 
         return -1 
+
+    def findDuplicate_floyds(self, nums: list[int]) -> int:
+        slow, fast = 0, 0
+        while True:
+            slow = nums[slow]
+            fast = nums[nums[fast]]
+
+            if slow == fast:
+                break
+            
+        slow2 = 0
+        while True:
+            slow = nums[slow]
+            slow2 = nums[slow2]
+
+            if slow == slow2:
+                return slow
     
     def searchMatrix(self, matrix: list[list[int]], target: int) -> bool:
         rows, cols = len(matrix), len(matrix[0])
