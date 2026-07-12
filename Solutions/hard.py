@@ -187,29 +187,29 @@ class Solution:
         groupPrev = dummy
 
         while True:
-            kth = self.getKth(groupPrev, k)
+            kth = self.getK(groupPrev, k)
             if not kth:
                 break
             groupNext = kth.next
 
-            prev, crr = kth.next, groupPrev.next
-            while crr != groupNext:
-                nxt = crr.next
-                crr.next = prev
-                prev = crr
-                crr = nxt
+            prev, curr = kth.next, groupPrev.next
+            while curr != groupNext:
+                tmp = curr.next
+                curr.next = prev
+                prev = curr
+                curr = tmp
 
-            nxt = groupPrev.next
+            tmp = groupPrev.next
             groupPrev.next = kth
-            groupPrev = nxt
+            groupPrev = tmp
 
         return dummy.next
 
-    def getKth(self, crr, k):
-        while crr and k > 0:
-            crr = crr.next
+    def getK(self, curr, k):
+        while curr and k > 0:
+            curr = curr.next
             k -= 1
-        return crr
+        return curr
             
 ans = Solution()
 print(ans.maxSlidingWindow([1,2,1,0,4,2,6], 3))
