@@ -210,6 +210,19 @@ class Solution:
                 return helper(nums, target, mid+1, high)
                 
         return helper(nums, target, 0, len(nums)-1)
+    
+    def maxProfit(self, prices: list[int]) -> int:
+        l, r = 0, 1
+        maxP = 0
+
+        while r < len(prices):
+            if prices[l] < prices[r]:
+                profit = prices[r] - prices[l]
+                maxP = max(maxP, profit)
+            else:
+                l = r
+            r += 1
+        return maxP
 
 ans = Solution()
 print(ans.reorderList(ListNode(0, ListNode(1, ListNode(2, ListNode(3, ListNode(4)))))))
