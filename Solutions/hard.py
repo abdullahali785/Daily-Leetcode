@@ -109,8 +109,8 @@ class Solution:
 
     def maxSlidingWindow(self, nums: list[int], k: int) -> list[int]:
         res = []
-        q = collections.deque()
         l = r = 0
+        q = collections.deque()
 
         while r < len(nums):
             while q and nums[q[-1]] < nums[r]:
