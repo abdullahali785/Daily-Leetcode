@@ -195,21 +195,6 @@ class Solution:
                 return True
 
         return False 
-    
-    def search_helper(self, nums: list[int], target: int) -> int:
-        def helper(nums: list[int], target: int, low: int, high: int) -> int:
-            if low > high:
-                return -1
-
-            mid = (low + high) // 2
-            if nums[mid] == target:
-                return mid
-            elif nums[mid] > target:
-                return helper(nums, target, low, mid-1)
-            else:
-                return helper(nums, target, mid+1, high)
-                
-        return helper(nums, target, 0, len(nums)-1)
 
     def search(self, nums: list[int], target: int) -> int:
         l, r = 0, len(nums) - 1
@@ -224,6 +209,20 @@ class Solution:
                 return m
         return -1
 
+    def search_helper(self, nums: list[int], target: int) -> int:
+        def helper(nums: list[int], target: int, low: int, high: int) -> int:
+            if low > high:
+                return -1
+
+            mid = (low + high) // 2
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] > target:
+                return helper(nums, target, low, mid-1)
+            else:
+                return helper(nums, target, mid+1, high)
+                
+        return helper(nums, target, 0, len(nums)-1)
     
     def maxProfit(self, prices: list[int]) -> int:
         l, r = 0, 1

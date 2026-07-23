@@ -697,33 +697,30 @@ class Solution:
                 return slow
     
     def searchMatrix(self, matrix: list[list[int]], target: int) -> bool:
-        rows, cols = len(matrix), len(matrix[0])
+        top, bot = 0, len(matrix) - 1
 
-        top, bot = 0, rows - 1
         while top <= bot:
-            row = (top + bot) // 2
-            if target > matrix[row][-1]:
-                top = row + 1
-            elif target < matrix[row][0]:
-                bot = row - 1
+            mid = (top + bot) // 2
+            if target < matrix[mid][0]:
+                bot = mid - 1
+            elif target > matrix[mid][-1]:
+                top = mid + 1
             else:
-                break
+                return self.search(matrix[mid], target)
+        return False
 
-        if not (top <= bot):
-            return False
+    def search(self, nums: list[int], target: int) -> int:
+        l, r = 0, len(nums) - 1
 
-        row = (top + bot) // 2
-        l, r = 0, cols - 1
         while l <= r:
-            mid = (l + r) // 2
-            if target > matrix[row][mid]:
-                l = mid + 1
-            elif target < matrix[row][mid]:
-                r = mid - 1
+            m = (l + r) // 2
+            if nums[m] > target:
+                r = m - 1
+            elif nums[m] < target:
+                l = m + 1
             else:
-                return True 
-        
-        return False 
+                return True
+        return False
     
     def minEatingSpeed(self, piles: list[int], h: int) -> int:
         l, r = 1, max(piles)
