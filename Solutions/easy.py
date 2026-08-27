@@ -197,9 +197,9 @@ class Solution:
         return False 
 
     def search(self, nums: list[int], target: int) -> int:
-        l, r = 0, len(nums) - 1
+        l, r = 0, len(nums)-1
 
-        while l <= r:
+        while l <=r:
             m = (l + r) // 2
             if nums[m] > target:
                 r = m - 1
