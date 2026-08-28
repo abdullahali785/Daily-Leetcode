@@ -722,25 +722,25 @@ class Solution:
                 return slow
     
     def searchMatrix(self, matrix: list[list[int]], target: int) -> bool:
-        top, bot = 0, len(matrix) - 1
+        l, r = 0, len(matrix)-1
 
-        while top <= bot:
-            mid = (top + bot) // 2
-            if target < matrix[mid][0]:
-                bot = mid - 1
-            elif target > matrix[mid][-1]:
-                top = mid + 1
+        while l <= r:
+            m = (l + r) // 2
+            if matrix[m][0] > target:
+                r = m - 1
+            elif matrix[m][-1] < target:
+                l = m + 1
             else:
-                return self.search(matrix[mid], target)
-        return False
+                return self.search(matrix[m], target)
+        return False 
 
     def search(self, nums: list[int], target: int) -> int:
-        l, r = 0, len(nums) - 1
+        l, r = 0, len(nums)-1
 
         while l <= r:
             m = (l + r) // 2
             if nums[m] > target:
-                r = m - 1
+                r = m - 1 
             elif nums[m] < target:
                 l = m + 1
             else:
