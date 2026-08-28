@@ -774,17 +774,18 @@ class Solution:
 
         while l <= r:
             k = (l + r) // 2
-            hours = 0
-            for p in piles:
-                hours += math.ceil(p / k) 
 
-            if hours <= h:
+            time = 0
+            for pile in piles:
+                time += math.ceil(pile / k)
+
+            if time <= h:
                 res = min(res, k)
                 r = k - 1
             else:
                 l = k + 1
-        
-        return res 
+
+        return res
     
     def findMin(self, nums: list[int]) -> int:
         res = nums[0]
