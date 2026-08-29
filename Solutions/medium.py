@@ -789,19 +789,21 @@ class Solution:
     
     def findMin(self, nums: list[int]) -> int:
         res = nums[0]
-        l, r = 0, len(nums) - 1
-
+        l, r = 0, len(nums)-1
+        
         while l <= r:
             if nums[l] < nums[r]:
                 return min(res, nums[l])
                 
-            m = (l + r) // 2
-            res = min(res, nums[m])
+            mid = (l + r) // 2
+            res = min(res, nums[mid])
 
-            if nums[m] >= nums[l]:
-                l = m + 1
+            if nums[l] <= nums[mid]:
+                # Search right
+                l = mid + 1
             else:
-                r = m - 1
+                # Search left
+                r = mid - 1
 
         return res 
 
