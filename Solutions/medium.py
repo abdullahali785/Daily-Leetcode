@@ -748,24 +748,27 @@ class Solution:
         return False
 
     def search_rotated(self, nums: list[int], target: int) -> int:
-        l, r = 0, len(nums) - 1
+        l, r = 0, len(nums)-1
 
         while l <= r:
-            mid = (l + r) // 2 
-            if target == nums[mid]:
-                return mid
-            
-            if nums[mid] >= nums[l]:
-                if target > nums[mid] or target < nums[l]:
-                    l = mid + 1
-                else:
-                    r = mid - 1
+            m = (l + r) // 2
 
-            else:
-                if target < nums[mid] or target > nums[r]:
-                    r = mid - 1
+            if nums[m] == target:
+                return m
+
+            if nums[l] <= nums[m]:
+                # Pivot in right side
+                if target > nums[m] or target < nums[l]:
+                    l = m + 1
                 else:
-                    l = mid + 1 
+                    r = m - 1
+            else:
+                # Pivot in left side
+                if target < nums[m] or target > nums[r]:
+                    r = m - 1
+                else:
+                    l = m + 1
+
         return -1
 
     def minEatingSpeed(self, piles: list[int], h: int) -> int:
