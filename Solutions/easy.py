@@ -75,6 +75,17 @@ class Solution:
             tar = target - nums[j]
             if tar in hashmap and hashmap[tar] != j:
                 return [min(hashmap[tar], j), max(hashmap[tar], j)] 
+
+    def twoSum(self, nums: list[int], target: int) -> list[int]:
+        hashmap = {}
+
+        for i, num in enumerate(nums):
+            goal = target - num
+
+            if goal in hashmap:
+                return [hashmap[goal], i]
+
+            hashmap[num] = i
     
     def encode(self, strs: list) -> str:
         result = ''
