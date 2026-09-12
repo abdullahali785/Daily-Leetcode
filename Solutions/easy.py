@@ -15,6 +15,12 @@ class ListNode:
             curr = curr.next
         return "[" + " -> ".join(vals) + "]"
 
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
 class Solution:
     def hasDuplicate(self, nums: list[int]) -> bool:
         hashmap = {}
@@ -247,6 +253,19 @@ class Solution:
                 l = r
             r += 1
         return maxP
+
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+            if root is None:
+                return None
+    
+            temp = root.left
+            root.left = root.right
+            root.right = temp
+    
+            self.invertTree(root.left)
+            self.invertTree(root.right)
+    
+            return root
 
 ans = Solution()
 print(ans.reorderList(ListNode(0, ListNode(1, ListNode(2, ListNode(3, ListNode(4)))))))
