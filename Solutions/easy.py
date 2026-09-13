@@ -255,17 +255,23 @@ class Solution:
         return maxP
 
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-            if root is None:
-                return None
-    
-            temp = root.left
-            root.left = root.right
-            root.right = temp
-    
-            self.invertTree(root.left)
-            self.invertTree(root.right)
-    
-            return root
+        if root is None:
+            return None
+
+        temp = root.left
+        root.left = root.right
+        root.right = temp
+
+        self.invertTree(root.left)
+        self.invertTree(root.right)
+
+        return root
+
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        if not root:
+            return 0
+
+        return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
 
 ans = Solution()
 print(ans.reorderList(ListNode(0, ListNode(1, ListNode(2, ListNode(3, ListNode(4)))))))
