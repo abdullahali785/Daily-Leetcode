@@ -273,5 +273,21 @@ class Solution:
 
         return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
 
+    def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        self.diameter = 0
+
+        def dfs(crr):
+            if crr is None:
+                return 0
+
+            left = dfs(crr.left)
+            right = dfs(crr.right)
+
+            self.diameter = max(self.diameter, left + right)
+            return 1 + max(left, right)
+
+        dfs(root)
+        return self.diameter
+
 ans = Solution()
 print(ans.reorderList(ListNode(0, ListNode(1, ListNode(2, ListNode(3, ListNode(4)))))))
