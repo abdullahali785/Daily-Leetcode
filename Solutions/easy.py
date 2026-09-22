@@ -289,5 +289,24 @@ class Solution:
         dfs(root)
         return self.diameter
 
+    def isBalanced(self, root: Optional[TreeNode]) -> bool:
+        self.isBalanced = True
+
+        def dfs(crr):
+            if crr is None:
+                return 0
+            
+            left = dfs(crr.left)
+            right = dfs(crr.right)
+
+            diff = left - right
+            if abs(diff) > 1:
+                self.isBalanced = False 
+
+            return 1 + max(left, right)
+
+        dfs(root)
+        return self.isBalanced
+
 ans = Solution()
 print(ans.reorderList(ListNode(0, ListNode(1, ListNode(2, ListNode(3, ListNode(4)))))))
