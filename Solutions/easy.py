@@ -308,5 +308,14 @@ class Solution:
         dfs(root)
         return self.isBalanced
 
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        if not p and not q:
+            return True
+
+        if not p or not q or p.val != q.val:
+            return False
+
+        return (self.isSameTree(p.left, q.left)) and (self.isSameTree(p.right, q.right))
+
 ans = Solution()
 print(ans.reorderList(ListNode(0, ListNode(1, ListNode(2, ListNode(3, ListNode(4)))))))
