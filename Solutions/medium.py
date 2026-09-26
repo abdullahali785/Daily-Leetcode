@@ -816,7 +816,7 @@ class Solution:
 
         return res 
 
-    def lowestCommonAncestor(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
+    def lowestCommonAncestor1(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
         if p.val < root.val < q.val or q.val < root.val < p.val:
             return root
 
@@ -829,6 +829,52 @@ class Solution:
             return self.lowestCommonAncestor(root.left, p, q)
         elif min(p.val, q.val) > root.val:
             return self.lowestCommonAncestor(root.right, p, q)
+
+    def lowestCommonAncestor2(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
+        if root.val == p.val:
+            return p
+        elif root.val == q.val:
+            return q
+
+        if max(p.val, q.val) < root.val:
+            return self.lowestCommonAncestor(root.left, p, q)
+
+        elif min(p.val, q.val) > root.val:
+            return self.lowestCommonAncestor(root.right, p, q)
+
+        else:
+            return root
+
+    def lowestCommonAncestor3(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
+        crr = root
+
+        while crr:
+            if p.val > crr.val and q.val > crr.val:
+                crr = crr.right
+            elif p.val < crr.val and q.val < crr.val:
+                crr = crr.left
+            else:
+                return crr
+
+    def levelOrder(self, root: Optional[TreeNode]) -> list[list[int]]:
+        tree = []
+        queue = [(root, 0)]
+        level = 0
+        
+        while queue:
+            node, lvl = queue.pop()
+            level = lvl
+
+            if node:
+                queue.append((node.right, level + 1))
+                queue.append((node.left, level + 1))
+                
+                if len(tree) == lvl:
+                    tree.append([])
+                tree[lvl].append(node.val)
+
+        return tree
+            
 
 ans = Solution()
 print(ans.removeNthFromEnd([1,2,3,4], 2))
