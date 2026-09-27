@@ -874,7 +874,16 @@ class Solution:
                 tree[lvl].append(node.val)
 
         return tree
-            
+
+    def rightSideView(self, root: Optional[TreeNode]) -> list[int]:
+        tree = self.levelOrder(root)
+        res = []
+
+        for level in tree:
+            res.append(level[-1])
+
+        return res
+
 
 ans = Solution()
 print(ans.removeNthFromEnd([1,2,3,4], 2))
