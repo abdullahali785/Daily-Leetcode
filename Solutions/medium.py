@@ -884,6 +884,26 @@ class Solution:
 
         return res
 
+    def rightSideView(self, root: Optional[TreeNode]) -> list[int]:
+        if not root:
+            return []
+
+        queue = collections.deque([root])
+        view = []
+
+        while queue:
+            for i in range(len(queue)):
+                node = queue.popleft()
+
+                if node:
+                    queue.append(node.left)
+                    queue.append(node.right)
+                    rightMost = node.val
+
+            view.append(rightMost)
+
+        return view[:-1]
+
 
 ans = Solution()
 print(ans.removeNthFromEnd([1,2,3,4], 2))
