@@ -904,6 +904,26 @@ class Solution:
 
         return view[:-1]
 
+    def goodNodes(self, root: TreeNode) -> int:
+        
+        def dfs(self, node: TreeNode, maxNode: int):
+            if not node:
+                return 0
+
+            if node.val >= maxNode:
+                res = 1 
+            else:
+                res = 0
+
+            maxNode = max(maxNode, node.val)
+
+            res += self.dfs(node.left, maxNode)
+            res += self.dfs(node.right, maxNode)
+
+            return res 
+
+        return self.dfs(root, root.val)
+
 
 ans = Solution()
 print(ans.removeNthFromEnd([1,2,3,4], 2))
