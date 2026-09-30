@@ -906,23 +906,30 @@ class Solution:
 
     def goodNodes(self, root: TreeNode) -> int:
         
-        def dfs(self, node: TreeNode, maxNode: int):
+        def dfs(node, maxNode):
             if not node:
                 return 0
 
             if node.val >= maxNode:
-                res = 1 
+                maxNode = node.val
+                return 1 + dfs(node.left, maxNode) + dfs(node.right, maxNode)
             else:
-                res = 0
+                return dfs(node.left, maxNode) + dfs(node.right, maxNode)
 
-            maxNode = max(maxNode, node.val)
+        return dfs(root, root.val)
 
-            res += self.dfs(node.left, maxNode)
-            res += self.dfs(node.right, maxNode)
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        
+        def dfs(node, limits):
+            if not node:
+                return True 
 
-            return res 
+            if node.val <= limits[0] or node.val >= limits[1]:
+                return False 
+            
+            return (dfs(node.left, [limits[0], node.val]) and dfs(node.right, [node.val, limits[1]]))
 
-        return self.dfs(root, root.val)
+        return dfs(root, [float('-inf'), float('inf')])
 
 
 ans = Solution()
