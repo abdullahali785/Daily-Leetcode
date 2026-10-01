@@ -932,5 +932,17 @@ class Solution:
         return dfs(root, [float('-inf'), float('inf')])
 
 
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        
+        def dfs(node, visited):
+            if node:
+                dfs(node.left, visited)
+                visited.append(node.val)
+                dfs(node.right, visited)
+
+            return visited 
+
+        return dfs(root, [])[k-1]
+
 ans = Solution()
 print(ans.removeNthFromEnd([1,2,3,4], 2))
