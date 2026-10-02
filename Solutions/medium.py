@@ -933,16 +933,20 @@ class Solution:
 
 
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        stack = []
+        current = root
         
-        def dfs(node, visited):
-            if node:
-                dfs(node.left, visited)
-                visited.append(node.val)
-                dfs(node.right, visited)
+        while current or stack:
+            while current:
+                stack.append(current)
+                current = current.left
+                
+            current = stack.pop()
+            if k == 1:
+                return current.val
 
-            return visited 
-
-        return dfs(root, [])[k-1]
+            k -= 1
+            current = current.right
 
 ans = Solution()
 print(ans.removeNthFromEnd([1,2,3,4], 2))
