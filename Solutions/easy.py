@@ -34,18 +34,16 @@ class Solution:
         hashmap = {}
 
         for char in s:
-            if char in hashmap:
-                hashmap[char] += 1
-            else:
-                hashmap[char] = 1
+            if char not in hashmap:
+                hashmap[char] = 0
+            hashmap[char] += 1
 
         for char in t:
-            if char in hashmap:
-                hashmap[char] -= 1
-            else:
+            if char not in hashmap:
                 return False
+            hashmap[char] -= 1
 
-        return all(v == 0 for v in hashmap.values())
+        return all(value == 0 for value in hashmap.values())
     
     def twoSum(self, numbers: list[int], target: int) -> list[int]:
         p1 = 1
