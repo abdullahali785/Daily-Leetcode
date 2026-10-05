@@ -16,6 +16,12 @@ class ListNode:
             curr = curr.next
         return "[" + " -> ".join(vals) + "]"
 
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
 class Solution:
     def trap(self, height: list[int]) -> int:
         pre, suf, res = 0, 0, 0
@@ -239,6 +245,22 @@ class Solution:
                 r = i - 1
             else:
                 l = i + 1
+
+    def maxPathSum(self, root: Optional[TreeNode]) -> int:
+        res = [root.val]
+
+        def dfs(crr):
+            if not crr:
+                return 0
+
+            leftMax = max(dfs(crr.left), 0)
+            rightMax = max(dfs(crr.right), 0)
+
+            res[0] = max(res[0], crr.val + leftMax + rightMax)
+            return crr.val + max(leftMax, rightMax)
+
+        dfs(root)
+        return res[0]
             
 ans = Solution()
 print(ans.maxSlidingWindow([1,2,1,0,4,2,6], 3))
