@@ -261,6 +261,43 @@ class Solution:
 
         dfs(root)
         return res[0]
+
+class Codec:
+    # Encodes a tree to a single string.
+    def serialize(self, root: Optional[TreeNode]) -> str:
+        tree = []
+
+        def DFS(crr):
+            if not crr:
+                tree.append('N')
+                return 
+
+            tree.append(f"{crr.val}")
+            DFS(crr.left)
+            DFS(crr.right)
+
+        DFS(root)
+        return ",".join(tree)
+        
+    # Decodes your encoded data to tree.
+    def deserialize(self, data: str) -> Optional[TreeNode]:
+        tree = data.split(",")
+        self.i = 0
+        
+        def dfs():
+            if tree[self.i] == 'N':
+                self.i += 1
+                return None
+
+            node = TreeNode(int(tree[self.i]))
+            self.i += 1
+
+            node.left = dfs()
+            node.right = dfs()
+
+            return node
+        
+        return dfs()
             
 ans = Solution()
 print(ans.maxSlidingWindow([1,2,1,0,4,2,6], 3))
