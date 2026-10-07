@@ -263,6 +263,7 @@ class Solution:
         return res[0]
 
 class Codec:
+    # DFS
     # Encodes a tree to a single string.
     def serialize(self, root: Optional[TreeNode]) -> str:
         tree = []
@@ -298,6 +299,70 @@ class Codec:
             return node
         
         return dfs()
-            
+
+    # BFS
+    # Encodes a tree to a single string.
+    def serialize(self, root: Optional[TreeNode]) -> str:
+
+        def bfs(root):
+            if not root:
+                return ""
+
+            queue = collections.deque([root])
+            visited = []
+
+            while queue:
+                for i in range(len(queue)):
+                    node = queue.popleft()
+
+                    if node:
+                        queue.append(node.left)
+                        queue.append(node.right)
+                        visited.append(str(node.val))
+                    else:
+                        visited.append("N")
+
+            return ",".join(visited) 
+        
+        return bfs(root)
+        
+    # Decodes your encoded data to tree.
+    def deserialize(self, data: str) -> Optional[TreeNode]:
+        if data == "":
+            return None
+
+        tree = data.split(",")
+
+        def build(tree):
+            root = TreeNode(int(tree[0]))
+            queue = collections.deque([root])
+
+            i = 1
+            n = len(tree)
+
+            while queue and i < n:
+                node = queue.popleft()
+
+                if i < n:
+                    if tree[i] != 'N':
+                        node.left = TreeNode(int(tree[i]))
+                        queue.append(node.left)
+                    else:
+                        node.left = None
+                    
+                    i += 1
+                    
+                if i < n:
+                    if tree[i] != 'N':
+                        node.right = TreeNode(int(tree[i]))
+                        queue.append(node.right)
+                    else:
+                        node.right = None
+
+                    i += 1
+
+            return root
+        return build(tree)
+
 ans = Solution()
 print(ans.maxSlidingWindow([1,2,1,0,4,2,6], 3))
