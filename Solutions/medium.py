@@ -980,5 +980,29 @@ class Solution:
         dfs(0)
         return res
 
+    def combinationSum(self, nums: list[int], target: int) -> list[list[int]]:
+        res = []
+
+        def dfs(i, crr, total):
+            if total == target:
+                res.append(crr.copy())
+                return 
+
+            if i >= len(nums) or total > target:
+                return 
+
+            # Include choice
+            crr.append(nums[i])
+            dfs(i, crr, total + nums[i])
+            
+
+            # Don't include choice
+            crr.pop()
+            dfs(i + 1, crr, total)
+
+        dfs(0, [], 0)
+        return res
+
+
 ans = Solution()
 print(ans.removeNthFromEnd([1,2,3,4], 2))
