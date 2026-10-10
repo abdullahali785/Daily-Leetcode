@@ -108,7 +108,7 @@ class Solution:
             i = j+1+lenght
         return result
 
-    def sPalindrome(self, s: str) -> bool:
+    def isPalindrome(self, s: str) -> bool:
         cleaned = ''.join(c for c in s if c.isalnum()).lower()
         reversed = ""
 
