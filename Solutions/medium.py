@@ -1003,6 +1003,28 @@ class Solution:
         dfs(0, [], 0)
         return res
 
+    def combinationSum2(self, candidates: list[int], target: int) -> list[list[int]]:
+        candidates.sort()
+        res = []
+
+        def dfs(i, crr, total):
+            if total == target:
+                res.append(crr.copy())
+                return
+
+            if i == len(candidates) or total > target:
+                return
+
+            crr.append(candidates[i])
+            dfs(i+1, crr, total + candidates[i])
+            crr.pop()
+
+            while i + 1 < len(candidates) and candidates[i] == candidates[i+1]:
+                i += 1
+            dfs(i+1, crr, total)
+
+        dfs(0, [], 0)
+        return res 
 
 ans = Solution()
 print(ans.removeNthFromEnd([1,2,3,4], 2))
