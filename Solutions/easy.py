@@ -326,5 +326,15 @@ class Solution:
 
         return (self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot))
 
+    def climbStairs(self, n: int) -> int:
+        one, two = 1, 1
+
+        for i in range(n-1):
+            temp = one
+            one = one + two
+            two = temp
+
+        return one
+
 ans = Solution()
 print(ans.reorderList(ListNode(0, ListNode(1, ListNode(2, ListNode(3, ListNode(4)))))))
