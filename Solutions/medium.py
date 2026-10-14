@@ -1026,5 +1026,20 @@ class Solution:
         dfs(0, [], 0)
         return res 
 
+    def permute(self, nums: list[int]) -> list[list[int]]:
+        if len(nums) == 0:
+            return [[]]
+
+        perms = self.permute(nums[1:])
+        res = []
+
+        for perm in perms:
+            for i in range(len(perm) + 1):
+                perm_copy = perm.copy()
+                perm_copy.insert(i, nums[0])
+                res.append(perm_copy)
+
+        return res 
+
 ans = Solution()
 print(ans.removeNthFromEnd([1,2,3,4], 2))
