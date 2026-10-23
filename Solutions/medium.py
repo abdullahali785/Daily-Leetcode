@@ -1083,5 +1083,35 @@ class Solution:
         backtrack(0, 0)
         return res 
 
+    def exist(self, board: list[list[str]], word: str) -> bool:
+        rows, cols = len(board), len(board[0])
+        path = set() #Stores (row, col)
+
+        def dfs(r, c, i):
+            if i == len(word):
+                return True
+
+            if (r < 0 or c < 0 or 
+              r >= rows or c >= cols or 
+              word[i] != board[r][c] or 
+              (r, c) in path):
+                return False
+
+            path.add((r, c))
+            res = (dfs(r + 1, c, i + 1) or 
+                dfs(r - 1, c, i + 1) or 
+                dfs(r, c + 1, i + 1) or 
+                dfs(r, c - 1, i + 1))
+
+            path.remove((r, c))
+            return res
+
+        for row in range(rows):
+            for col in range(cols):
+                if dfs(row, col, 0): 
+                    return True
+
+        return False
+
 ans = Solution()
 print(ans.removeNthFromEnd([1,2,3,4], 2))
