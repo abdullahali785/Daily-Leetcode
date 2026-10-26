@@ -1113,5 +1113,32 @@ class Solution:
 
         return False
 
+    def partition(self, s: str) -> list[list[str]]:
+        res, sub = [], []
+
+        def dfs(i):
+            if i >= len(s):
+                res.append(sub.copy())
+                return
+
+            for j in range(i, len(s)):
+                if self.isPali(s, i, j):
+                    sub.append(s[i:j+1])
+                    dfs(j+1)
+                    sub.pop()
+
+        dfs(0)
+        return res 
+
+    def isPali(self, string, l, r):
+        while l <= r:
+            if string[l] != string[r]:
+                return False
+
+            l = l + 1
+            r = r - 1
+            
+        return True
+
 ans = Solution()
 print(ans.removeNthFromEnd([1,2,3,4], 2))
