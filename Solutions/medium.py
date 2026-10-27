@@ -1140,5 +1140,22 @@ class Solution:
             
         return True
 
+    def letterCombinations(self, digits: str) -> list[str]:
+        hashmap = {"2": "abc", "3": "def", "4": "ghi", "5": "jkl", "6": "mno", "7": "pqrs", "8": "tuv", "9": "wxyz"}
+        res = []
+
+        def backtrack(i, crr):
+            if len(crr) == len(digits):
+                res.append(crr)
+                return 
+
+            for char in hashmap[digits[i]]:
+                backtrack(i + 1, crr + char)
+
+        if digits:
+            backtrack(0, "")
+
+        return res
+
 ans = Solution()
 print(ans.removeNthFromEnd([1,2,3,4], 2))
