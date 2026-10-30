@@ -267,6 +267,21 @@ class Solution:
 
         return root
 
+    def invertTree_dfs(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        def dfs(crr):
+            if not crr:
+                return 
+            
+            temp = crr.left 
+            crr.left = crr.right
+            crr.right = temp
+
+            dfs(crr.left)
+            dfs(crr.right)
+
+        dfs(root) 
+        return root
+
     def maxDepth(self, root: Optional[TreeNode]) -> int:
         if not root:
             return 0
