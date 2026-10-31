@@ -121,6 +121,19 @@ class Solution:
             return True
 
         return False
+
+    def isPalindrome_2PR(self, s: str) -> bool:
+        cleaned = "".join(c for c in s if c.isalnum()).lower()
+        l, r = 0, len(cleaned) - 1
+
+        while l <= r:
+            if cleaned[l] != cleaned[r]:
+                return False
+
+            l += 1
+            r -= 1
+
+        return True 
     
     def isValid(self, s: str) -> bool:
         stack = []
