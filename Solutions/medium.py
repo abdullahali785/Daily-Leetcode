@@ -35,22 +35,22 @@ class nodeDouble:
 class MinStack:
     def __init__(self):
         self.stack = []
-        self.minimum = []
+        self.minStack = []
 
     def push(self, val: int) -> None:
         self.stack.append(val)
-        val = min(val, self.minimum[-1] if self.minimum else val)
-        self.minimum.append(val)
+        minElem = min(val, self.minStack[-1] if self.minStack else val)
+        self.minStack.append(minElem)
 
     def pop(self) -> None:
         self.stack.pop()
-        self.minimum.pop()
+        self.minStack.pop()
 
     def top(self) -> int:
         return self.stack[-1]
 
     def getMin(self) -> int:
-        return self.minimum[-1]
+        return self.minStack[-1]
     
 class LRUCache:
     def __init__(self, capacity: int):
