@@ -45,7 +45,7 @@ class Solution:
 
         return all(value == 0 for value in hashmap.values())
     
-    def twoSum(self, numbers: list[int], target: int) -> list[int]:
+    def twoSum_2PRS(self, numbers: list[int], target: int) -> list[int]:
         p1 = 1
         p2 = len(numbers)
 
@@ -56,38 +56,14 @@ class Solution:
                 p1 += 1
             else:
                 return [p1, p2]
-            
-    def twoSum(self, nums: list[int], target: int) -> list[int]:
-        hashmap = {}
-        length = len(nums)
-
-        for i in range(length):
-            hashmap[nums[i]] = i
-
-        for i in range(length):
-            diff = target - nums[i]
-            if diff in hashmap and hashmap[diff] != i:
-                return [i, hashmap[diff]]
-
-    def twoSum(self, nums: list[int], target: int) -> list[int]:
-        hashmap = {}
-
-        for i in range(len(nums)):
-            hashmap[nums[i]] = i
-
-        for j in range(len(nums)):
-            tar = target - nums[j]
-            if tar in hashmap and hashmap[tar] != j:
-                return [min(hashmap[tar], j), max(hashmap[tar], j)] 
 
     def twoSum(self, nums: list[int], target: int) -> list[int]:
         hashmap = {}
 
         for i, num in enumerate(nums):
-            goal = target - num
-
-            if goal in hashmap:
-                return [hashmap[goal], i]
+            diff = target - num
+            if diff in hashmap:
+                return [hashmap[diff], i]
 
             hashmap[num] = i
     
