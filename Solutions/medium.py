@@ -905,16 +905,14 @@ class Solution:
         return view[:-1]
 
     def goodNodes(self, root: TreeNode) -> int:
-        
-        def dfs(node, maxNode):
-            if not node:
+        def dfs(crr, maxVal):
+            if not crr:
                 return 0
 
-            if node.val >= maxNode:
-                maxNode = node.val
-                return 1 + dfs(node.left, maxNode) + dfs(node.right, maxNode)
-            else:
-                return dfs(node.left, maxNode) + dfs(node.right, maxNode)
+            count = 1 if crr.val >= maxVal else 0
+            maxVal = max(maxVal, crr.val)
+
+            return count + dfs(crr.left, maxVal) + dfs(crr.right, maxVal)
 
         return dfs(root, root.val)
 
