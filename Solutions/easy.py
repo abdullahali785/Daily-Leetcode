@@ -21,6 +21,45 @@ class TreeNode:
         self.left = left
         self.right = right
 
+class KthLargest:
+    def __init__(self, k: int, nums: list[int]):
+        self.heap = []
+        self.k = k
+
+        for num in nums:
+            self.add(num)
+
+    def add(self, val: int) -> int:
+        self.heap.append(val)
+        self.heapify(len(self.heap) - 1)
+
+        if len(self.heap) > self.k:
+            self.heap[0] = self.heap.pop()
+            i, n = 0, len(self.heap)
+
+            while True:
+                s, l, r = i, 2 * i + 1, 2 * i + 2
+
+                if l < n and self.heap[l] < self.heap[s]:
+                    s = l
+                if r < n and self.heap[r] < self.heap[s]:
+                    s = r
+                if s == i:
+                    break
+
+                self.heap[i], self.heap[s] = self.heap[s], self.heap[i]
+                i = s
+
+        return self.heap[0]
+
+    def heapify(self, i):
+        p = (i - 1) // 2
+
+        while i > 0 and self.heap[i] < self.heap[p]:
+            self.heap[i], self.heap[p] = self.heap[p], self.heap[i]
+            i = p
+            p = (i - 1) // 2
+
 class Solution:
     def hasDuplicate(self, nums: list[int]) -> bool:
         hashmap = {}
