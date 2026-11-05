@@ -393,5 +393,61 @@ class Solution:
 
         return one
 
+    def lastStoneWeight(self, stones: list[int]) -> int:
+        stones = self.build_max_heap(stones)
+
+        while len(stones) > 1:
+            stone1 = stones[0]
+
+            if len(stones) < 3:
+                ind = 1
+                stone2 = stones[ind]
+                stones.pop(ind)
+
+            else:
+                if stones[2] > stones[1]:
+                    ind = 2
+                    stone2 = stones[ind]
+                    stones.pop(ind)
+
+                else: 
+                    ind = 1
+                    stone2 = stones[ind]
+                    stones.pop(ind)
+
+            stones.pop(0)
+
+            diff = stone1 - stone2
+            if diff != 0:
+                stones.append(abs(diff))
+
+            stones = self.build_max_heap(stones)
+
+        return stones[0] if stones else 0
+
+    def heapify(self, arr, i, n):
+        largest = i
+        l = 2 * i + 1
+        r = 2 * i + 2 
+
+        if l < n and arr[l] > arr[largest]:
+            largest = l
+
+        if r < n and arr[r] > arr[largest]:
+            largest = r
+
+        if largest != i:
+            arr[i], arr[largest] = arr[largest], arr[i]
+            self.heapify(arr, largest, n)
+
+
+    def build_max_heap(self, arr):
+        n = len(arr)
+        for i in range(n // 2 - 1, -1, -1):
+            self.heapify(arr, i, n)
+
+        return arr
+
+
 ans = Solution()
 print(ans.reorderList(ListNode(0, ListNode(1, ListNode(2, ListNode(3, ListNode(4)))))))
