@@ -31,34 +31,35 @@ class KthLargest:
 
     def add(self, val: int) -> int:
         self.heap.append(val)
-        self.heapify(len(self.heap) - 1)
+        self.heapify_up(len(self.heap) - 1)
 
         if len(self.heap) > self.k:
             self.heap[0] = self.heap.pop()
-            i, n = 0, len(self.heap)
-
-            while True:
-                s, l, r = i, 2 * i + 1, 2 * i + 2
-
-                if l < n and self.heap[l] < self.heap[s]:
-                    s = l
-                if r < n and self.heap[r] < self.heap[s]:
-                    s = r
-                if s == i:
-                    break
-
-                self.heap[i], self.heap[s] = self.heap[s], self.heap[i]
-                i = s
+            self.heapify_down(0)
 
         return self.heap[0]
 
-    def heapify(self, i):
-        p = (i - 1) // 2
+    def heapify_up(self, i):
+        while i > 0:
+            p = (i - 1) // 2
 
-        while i > 0 and self.heap[i] < self.heap[p]:
+            if self.heap[p] <= self.heap[i]: break
             self.heap[i], self.heap[p] = self.heap[p], self.heap[i]
             i = p
-            p = (i - 1) // 2
+
+    def heapify_down(self, i):
+        s = i
+        l = 2 * i + 1
+        r = 2 * i + 2
+
+        if l < len(self.heap) and self.heap[l] < self.heap[s]:
+            s = l
+        if r < len(self.heap) and self.heap[r] < self.heap[s]:
+            s = r
+
+        if s != i:
+            self.heap[i], self.heap[s] = self.heap[s], self.heap[i]
+            self.heapify_down(s)
 
 class Solution:
     def hasDuplicate(self, nums: list[int]) -> bool:
