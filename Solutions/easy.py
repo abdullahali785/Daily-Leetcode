@@ -394,40 +394,34 @@ class Solution:
         return one
 
     def lastStoneWeight(self, stones: list[int]) -> int:
-        stones = self.build_max_heap(stones)
+        stones = self.build(stones)
 
-        while len(stones) > 1:
+        while len(stones) >= 2:
             stone1 = stones[0]
-
-            if len(stones) < 3:
-                ind = 1
-                stone2 = stones[ind]
-                stones.pop(ind)
-
-            else:
-                if stones[2] > stones[1]:
-                    ind = 2
-                    stone2 = stones[ind]
-                    stones.pop(ind)
-
-                else: 
-                    ind = 1
-                    stone2 = stones[ind]
-                    stones.pop(ind)
-
-            stones.pop(0)
+            self.remove(stones, 0)
+            
+            stone2 = stones[0]
+            self.remove(stones, 0)
 
             diff = stone1 - stone2
             if diff != 0:
-                stones.append(abs(diff))
-
-            stones = self.build_max_heap(stones)
+                stones.append(diff)
+                self.push(stones)
 
         return stones[0] if stones else 0
 
-    def heapify(self, arr, i, n):
+    def build(self, arr):
+        n = len(arr)
+        for i in range(n // 2 - 1, -1, -1):
+            self.heapify(arr, i)
+
+        return arr
+
+    def heapify(self, arr, i):
+        n = len(arr)
+
         largest = i
-        l = 2 * i + 1
+        l = 2 * i + 1 
         r = 2 * i + 2 
 
         if l < n and arr[l] > arr[largest]:
@@ -438,16 +432,22 @@ class Solution:
 
         if largest != i:
             arr[i], arr[largest] = arr[largest], arr[i]
-            self.heapify(arr, largest, n)
+            self.heapify(arr, largest)
 
+    def remove(self, arr, i):
+        arr[i] = arr[-1]
+        arr.pop()
+        self.heapify(arr, i)
 
-    def build_max_heap(self, arr):
-        n = len(arr)
-        for i in range(n // 2 - 1, -1, -1):
-            self.heapify(arr, i, n)
+    def push(self, arr):
+        i = len(arr) - 1
+        while i > 0:
+            p = (i - 1) // 2
+            if arr[p] >= arr[i]:
+                break
 
-        return arr
-
+            arr[i], arr[p] = arr[p], arr[i]
+            i = p
 
 ans = Solution()
 print(ans.reorderList(ListNode(0, ListNode(1, ListNode(2, ListNode(3, ListNode(4)))))))
