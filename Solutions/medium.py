@@ -1155,5 +1155,66 @@ class Solution:
 
         return res
 
+    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+        self.heap = []
+        i = 0
+
+        for point in points:
+            d = self.distance(point)
+            
+            self.heap.append((d, point))
+            self.sift_up(i)
+            i += 1
+
+            if i > k:
+                self.remove()
+                i -= 1
+
+        res = []
+        for (d, point) in self.heap:
+            res.append(point)
+
+        return res
+
+    def distance(self, point):
+        x, y = point
+        return (x*x + y*y)
+
+    def sift_up(self, i):
+        arr = self.heap
+        n = len(arr)
+        p = (i - 1) // 2
+        
+        while i > 0 and arr[i] > arr[p]:
+            arr[i], arr[p] = arr[p], arr[i]
+            i = p
+            p = (i - 1) // 2
+
+    def remove(self):
+        self.heap[0] = self.heap[-1]
+        self.heap.pop()
+        self.sift_down(0)
+
+    def sift_down(self, i):
+        arr = self.heap
+        n = len(arr)
+
+        while True:
+            largest = i
+            l = 2 * i + 1
+            r = 2 * i + 2
+
+            if l < n and arr[l] > arr[largest]:
+                largest = l
+            if r < n and arr[r] > arr[largest]:
+                largest = r
+
+            if largest == i:
+                break
+
+            arr[i], arr[largest] = arr[largest], arr[i]
+            i = largest
+
+
 ans = Solution()
 print(ans.removeNthFromEnd([1,2,3,4], 2))
