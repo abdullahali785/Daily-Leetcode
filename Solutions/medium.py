@@ -1,4 +1,4 @@
-import math, collections
+import math, collections, heapq
 from typing import Optional
 from collections import Counter, defaultdict
 
@@ -1155,7 +1155,7 @@ class Solution:
 
         return res
 
-    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+    def kClosest(self, points: list[list[int]], k: int) -> list[list[int]]:
         self.heap = []
         i = 0
 
@@ -1214,6 +1214,23 @@ class Solution:
 
             arr[i], arr[largest] = arr[largest], arr[i]
             i = largest
+
+    def kClosest(self, points: list[list[int]], k: int) -> list[list[int]]:
+        # Use min heap 
+        heap = []
+        for x, y in points:
+            d = x*x + y*y
+            heap.append([d, x, y])
+
+        heapq.heapify(heap)
+
+        res = []
+        while k > 0:
+            point = heapq.heappop(heap)
+            res.append(point[1:])
+            k -= 1
+
+        return res 
 
 
 ans = Solution()
