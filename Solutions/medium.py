@@ -1215,7 +1215,7 @@ class Solution:
             arr[i], arr[largest] = arr[largest], arr[i]
             i = largest
 
-    def kClosest(self, points: list[list[int]], k: int) -> list[list[int]]:
+    def kClosest_heapq(self, points: list[list[int]], k: int) -> list[list[int]]:
         # Use min heap 
         heap = []
         for x, y in points:
@@ -1232,6 +1232,53 @@ class Solution:
 
         return res 
 
+    def findKthLargest(self, nums: list[int], k: int) -> int:
+        self.heap = []
+        for num in nums:
+            self.add(num)
+            if len(self.heap) > k:
+                self.remove()
+
+        return self.heap[0]
+
+    def remove(self):
+        self.heap[0] = self.heap[-1]
+        self.heap.pop()
+        self.sift_down(0)
+
+    def sift_down(self, i):
+        heap = self.heap
+        n = len(heap)
+
+        while True:
+            largest = i 
+            l = 2 * i + 1
+            r = 2 * i + 2
+
+            if l < n and heap[l] < heap[largest]:
+                largest = l
+
+            if r < n and heap[r] < heap[largest]:
+                largest = r
+
+            if largest == i:
+                break
+
+            heap[i], heap[largest] = heap[largest], heap[i]
+            i = largest
+
+    def add(self, num):
+        heap = self.heap
+        heap.append(num)
+        i = len(heap) - 1
+
+        while i > 0:
+            p = (i - 1) // 2
+            if heap[i] >= heap[p]:
+                break
+            
+            heap[i], heap[p] = heap[p], heap[i]
+            i = p
 
 ans = Solution()
 print(ans.removeNthFromEnd([1,2,3,4], 2))
