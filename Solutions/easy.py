@@ -1,4 +1,4 @@
-import collections
+import collections, heapq
 from typing import Optional
 from collections import defaultdict
 
@@ -394,60 +394,21 @@ class Solution:
         return one
 
     def lastStoneWeight(self, stones: list[int]) -> int:
-        stones = self.build(stones)
+        heap = [-weight for weight in stones]
+        heapq.heapify(heap)
 
-        while len(stones) >= 2:
-            stone1 = stones[0]
-            self.remove(stones, 0)
-            
-            stone2 = stones[0]
-            self.remove(stones, 0)
+        while len(heap) > 1:
+            stone1 = heapq.heappop(heap)
+            stone2 = heapq.heappop(heap)
 
-            diff = stone1 - stone2
-            if diff != 0:
-                stones.append(diff)
-                self.push(stones)
+            if stone1 != stone2:
+                stone = -abs(stone1 - stone2)
+                heapq.heappush(heap, stone)
 
-        return stones[0] if stones else 0
-
-    def build(self, arr):
-        n = len(arr)
-        for i in range(n // 2 - 1, -1, -1):
-            self.heapify(arr, i)
-
-        return arr
-
-    def heapify(self, arr, i):
-        n = len(arr)
-
-        largest = i
-        l = 2 * i + 1 
-        r = 2 * i + 2 
-
-        if l < n and arr[l] > arr[largest]:
-            largest = l
-
-        if r < n and arr[r] > arr[largest]:
-            largest = r
-
-        if largest != i:
-            arr[i], arr[largest] = arr[largest], arr[i]
-            self.heapify(arr, largest)
-
-    def remove(self, arr, i):
-        arr[i] = arr[-1]
-        arr.pop()
-        self.heapify(arr, i)
-
-    def push(self, arr):
-        i = len(arr) - 1
-        while i > 0:
-            p = (i - 1) // 2
-            if arr[p] >= arr[i]:
-                break
-
-            arr[i], arr[p] = arr[p], arr[i]
-            i = p
+        if heap:
+            return -heapq.heappop(heap)
+        else: 
+            return 0
 
 ans = Solution()
 print(ans.reorderList(ListNode(0, ListNode(1, ListNode(2, ListNode(3, ListNode(4)))))))
