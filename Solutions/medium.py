@@ -122,6 +122,44 @@ class TimeMap:
 
         return res
 
+class Twitter:
+    def __init__(self):
+        self.time = 0
+        self.tweets = defaultdict(list) # User ID : [(Time, Tweet ID), ...]
+        self.users = defaultdict(set) # User ID : set(IDs of poeple user follows)
+
+    def postTweet(self, userId: int, tweetId: int) -> None:
+        self.tweets[userId].append([self.time, tweetId])
+        self.time -= 1 
+
+    def getNewsFeed(self, userId: int) -> List[int]:
+        res, heap = [], []
+        self.users[userId].add(userId)
+
+        for user in self.users[userId]:
+            if user in self.tweets:
+                index = len(self.tweets[user]) - 1
+                time, tweet = self.tweets[user][index]
+                heap.append([time, tweet, user, index - 1])
+
+        heapq.heapify(heap)
+        while heap and len(res) < 10:
+            time, tweet, user, index = heapq.heappop(heap)
+            res.append(tweet)
+
+            if index >= 0:
+                time, tweet = self.tweets[user][index]
+                heapq.heappush(heap, [time, tweet, user, index - 1])
+
+        return res
+
+    def follow(self, followerId: int, followeeId: int) -> None:
+        self.users[followerId].add(followeeId)
+
+    def unfollow(self, followerId: int, followeeId: int) -> None:  
+        if followeeId in self.users[followerId]: 
+            self.users[followerId].remove(followeeId)
+
 class Solution:
     def groupAnagrams_sorting(self, strs: list[str]) -> list[list[str]]:
         res = defaultdict(list)
