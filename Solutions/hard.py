@@ -1,4 +1,4 @@
-import collections
+import collections, heapq
 from typing import Optional
 from collections import defaultdict
 from collections import deque
@@ -21,6 +21,45 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
+
+class MedianFinder:
+    def __init__(self):
+        self.left = [] # Max Heap
+        self.right = [] # Min Heap
+
+    def addNum(self, num: int) -> None:
+        if self.right == []:
+            heapq.heappush(self.right, num)
+
+        elif num > self.right[0]:
+            heapq.heappush(self.right, num)
+
+        else:
+            heapq.heappush(self.left, -num)
+
+        if len(self.left) - len(self.right) > 1:
+            # Left side is greater so Max Heap is bigger
+            # Pop the biggest from max heap 
+            elem = -heapq.heappop(self.left)
+
+            # Append to min heap
+            heapq.heappush(self.right, elem)
+
+        elif len(self.right) - len(self.left) > 1:
+            # Right side is greater so Min Heap is bigger
+            # Pop the smallest from min heap 
+            elem = heapq.heappop(self.right)
+
+            # Append to max heap
+            heapq.heappush(self.left, -elem)
+
+    def findMedian(self) -> float:
+        if len(self.left) == len(self.right):
+            return (self.right[0] - self.left[0]) / 2
+        elif len(self.left) > len(self.right):
+            return -self.left[0]
+        else:
+            return self.right[0]
 
 class Solution:
     def trap(self, height: list[int]) -> int:
