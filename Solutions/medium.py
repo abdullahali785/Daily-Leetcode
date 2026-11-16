@@ -1339,5 +1339,35 @@ class Solution:
 
         return time
 
+    def numIslands(self, grid: list[list[str]]) -> int:
+        islands = 0
+        rows, cols = len(grid), len(grid[0])
+        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+
+        def dfs(r, c):
+            # Check bounds and visited status
+            if (r < 0 or r >= rows or 
+                c < 0 or c >= cols or 
+                grid[r][c] == '0'):
+                return
+
+            # Mark cell as visited
+            grid[r][c] = '0'
+
+            # Explore all 4 adjacent neighbors
+            for dr, dc in directions:
+                dfs(r + dr, c + dc)
+
+            return 
+
+        # Trigger DFS from every unvisited valid cell
+        for r in range(rows):
+            for c in range(cols):
+                if grid[r][c] == '1':
+                    islands += 1
+                    dfs(r, c)
+
+        return islands
+
 ans = Solution()
 print(ans.removeNthFromEnd([1,2,3,4], 2))
