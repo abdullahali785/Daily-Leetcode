@@ -1384,5 +1384,22 @@ class Solution:
 
         return maxArea
 
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+        graphs = defaultdict(dict)
+
+        def clone(node):
+            if node in graphs:
+                return graphs[node]
+
+            copy = Node(node.val)
+            graphs[node] = copy
+
+            for neighbor in node.neighbors:
+                copy.neighbors.append(clone(neighbor))
+
+            return copy
+
+        return clone(node) if node else None
+
 ans = Solution()
 print(ans.removeNthFromEnd([1,2,3,4], 2))
